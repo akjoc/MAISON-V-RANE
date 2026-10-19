@@ -4,6 +4,7 @@ import { VideoHero } from '../components/primitives/VideoHero'
 import { RevealText, Line } from '../components/primitives/RevealText'
 import { RevealSection } from '../components/primitives/RevealSection'
 import { ParallaxMedia } from '../components/primitives/ParallaxMedia'
+import { ScrollFilm } from '../components/primitives/ScrollFilm'
 import { ProductCard } from '../components/primitives/ProductCard'
 import { Icon } from '../components/primitives/Icon'
 import { Media } from '../components/primitives/Media'
@@ -273,11 +274,18 @@ export function Home() {
               hours of alternating brush and polish before it is allowed to meet a case. It is the
               part of watchmaking that is felt rather than read.
             </p>
-            <Link to="/craftsmanship" className="btn btn--ghost-light">
-              <span>
-                Enter the atelier <Icon name="arrow-right" size={15} />
-              </span>
-            </Link>
+            <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap' }}>
+              <Link to="/craftsmanship" className="btn btn--light">
+                <span>
+                  Enter the atelier <Icon name="arrow-right" size={15} />
+                </span>
+              </Link>
+              <Link to="/collections/aeroform#study" className="btn btn--ghost-light">
+                <span>
+                  Turn the case in 3D <Icon name="rotate" size={15} />
+                </span>
+              </Link>
+            </div>
           </RevealSection>
           <div className="home-craft__stats">
             {[
@@ -293,6 +301,22 @@ export function Home() {
           </div>
         </div>
       </section>
+
+      {/* ——— Scroll-scrubbed film ——— */}
+      <ScrollFilm
+        posterKey="editorial-collection"
+        posterAlt="Aéroform on a travertine plinth as light moves across the plaster wall"
+        src="/assets/video/editorial-loop.mp4"
+        webmSrc="/assets/video/editorial-loop.webm"
+        eyebrow="Film · Volume II"
+        heading="A room, a plinth, and a single shaft of light."
+        chapters={[
+          { at: 0, title: 'Morning', copy: 'Light reaches the case from the left and draws the chamfer in one continuous line.' },
+          { at: 0.34, title: 'Noon', copy: 'The dial turns almost black as the angle steepens; the indices hold the only highlight.' },
+          { at: 0.67, title: 'Late afternoon', copy: 'Warm light crosses the travertine and the steel becomes champagne for a few minutes.' },
+        ]}
+        id="film"
+      />
 
       {/* ——— Campaign ——— */}
       <section className="home-campaign" aria-labelledby="campaign-title">

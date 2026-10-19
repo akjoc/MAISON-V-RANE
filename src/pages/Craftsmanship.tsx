@@ -5,6 +5,7 @@ import { Media } from '../components/primitives/Media'
 import { RevealSection } from '../components/primitives/RevealSection'
 import { RevealText, Line } from '../components/primitives/RevealText'
 import { craftsmanshipChapters } from '../data/editorial'
+import { ScrollFilm } from '../components/primitives/ScrollFilm'
 import { gsap, ScrollTrigger, prefersReducedMotion } from '../lib/motion'
 
 const sequence = [
@@ -253,35 +254,21 @@ export default function Craftsmanship() {
         <MaterialSequence />
       </div>
 
-      {/* Film */}
-      <section className="section craft-film">
-        <div className="container">
-          <div className="craft-film__head">
-            <p className="eyebrow">A short film</p>
-            <h2>Light across a finished case</h2>
-          </div>
-          <figure className="craft-film__figure">
-            <video
-              className="craft-film__video"
-              poster="/assets/images/hero-wide-1600.webp"
-              muted
-              loop
-              playsInline
-              autoPlay
-              controls
-              preload="metadata"
-              aria-label="Original studio loop: light moving across an Aéroform case"
-            >
-              <source src="/assets/video/aeroform-loop.webm" type="video/webm" />
-              <source src="/assets/video/aeroform-loop.mp4" type="video/mp4" />
-            </video>
-            <figcaption>
-              <span className="num">Film 01</span>
-              <span>Original generated studio loop · replaceable placeholder</span>
-            </figcaption>
-          </figure>
-        </div>
-      </section>
+      {/* Film — scrubbed by scroll */}
+      <ScrollFilm
+        posterKey="craft-atelier"
+        posterAlt="A watchmaker at the bench under a warm lamp"
+        src="/assets/video/atelier-loop.mp4"
+        webmSrc="/assets/video/atelier-loop.webm"
+        eyebrow="A short film"
+        heading="The bench, at working pace."
+        chapters={[
+          { at: 0, title: 'Before the first cut', copy: 'The case is drawn at arm’s length, then checked again against the wrist.' },
+          { at: 0.34, title: 'One direction', copy: 'Brushing follows a single axis, so highlights travel rather than break.' },
+          { at: 0.67, title: 'The last chamfer', copy: 'The polished edge is the final operation, and the one most often repeated.' },
+        ]}
+        id="film"
+      />
 
       {/* Closing */}
       <section className="section section--lg craft-cta">

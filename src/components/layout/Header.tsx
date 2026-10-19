@@ -9,6 +9,7 @@ import { useStore } from '../../context/StoreContext'
 export function Header() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
   const [condensed, setCondensed] = useState(false)
+  const [progress, setProgress] = useState(0)
   const closeTimer = useRef<number | null>(null)
   const headerRef = useRef<HTMLElement>(null)
   const location = useLocation()
@@ -20,10 +21,22 @@ export function Header() {
   }, [location.pathname])
 
   useEffect(() => {
-    const onScroll = () => setCondensed(window.scrollY > 40)
+    let frame = 0
+    const onScroll = () => {
+      if (frame) return
+      frame = window.requestAnimationFrame(() => {
+        frame = 0
+        const max = document.documentElement.scrollHeight - window.innerHeight
+        setCondensed(window.scrollY > 40)
+        setProgress(max > 0 ? Math.min(1, window.scrollY / max) : 0)
+      })
+    }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (frame) window.cancelAnimationFrame(frame)
+    }
   }, [])
 
   useEffect(() => {
@@ -72,7 +85,13 @@ export function Header() {
         <div className="hdr__inner">
           <div className="hdr__left">
             <nav className="hdr__nav" aria-label="Primary">
-              {primaryNav.map((item, i) => (
+              <span
+          className="hdr__progress"
+          aria-hidden="true"
+          style={{ transform: `scaleX(${Math.max(progress, 0.002)})` }}
+        />
+
+        {primaryNav.map((item, i) => (
                 <div
                   key={item.label}
                   onMouseEnter={() => {
@@ -143,6 +162,12 @@ export function Header() {
             </button>
           </div>
         </div>
+
+        <span
+          className="hdr__progress"
+          aria-hidden="true"
+          style={{ transform: `scaleX(${Math.max(progress, 0.002)})` }}
+        />
 
         {primaryNav.map((item, i) =>
           item.groups ? (

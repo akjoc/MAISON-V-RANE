@@ -58,11 +58,11 @@ Reads source renders from `raw/` and writes responsive AVIF/WebP plus derived ga
 
 | Route | Page | Notable interactions |
 | --- | --- | --- |
-| `/` | Home | Video hero with poster + controls + fallback, parallax editorial, featured grid, alternating story, dark craft band, campaign, material studies, services, appointment invitation |
-| `/collections/aeroform` | Flagship collection | Editorial hero, philosophy, four style directions, featured references, sticky four-chapter case story, dial/bracelet detail, interactive strap selector |
+| `/` | Home | Video hero with poster + controls + fallback, parallax editorial, featured grid, alternating story, dark craft band, **scroll-scrubbed film**, campaign, material studies, services, appointment invitation |
+| `/collections/aeroform` | Flagship collection | Editorial hero, philosophy, four style directions, featured references, **scroll-rotated 3D study with hotspots and finish switching**, **scroll-scrubbed film**, dial/bracelet detail, interactive strap selector |
 | `/watches` | Catalogue | URL-synced filters (dial, material, case size, movement, strap, availability), filter drawer, sort menu, grid/list views, active chips, load more, empty state |
 | `/watches/:slug` | Product detail | Gallery with thumbnails, swipe and zoom, 360/interactive study tab, reference + strap selection, quantity, add to bag, wishlist, availability, five accordions, recommendations, 404 for unknown slugs |
-| `/craftsmanship` | Editorial feature | Full-bleed hero, four disciplines, pinned material sequence (GSAP), original film with controls, closing CTA |
+| `/craftsmanship` | Editorial feature | Full-bleed hero, four disciplines, pinned material sequence (GSAP), **scroll-scrubbed atelier film**, closing CTA |
 | `/watchmaking` | Educational overview | Sticky chapter index, interactive SVG cutaway with selectable components, five chapters, specs |
 | `/services` | Services hub | Three service modules, promise section, service stats |
 | `/services/personalisation` | Personalisation | Working local-state configurator: reference, strap, engraving text and style, live SVG caseback preview, price summary, locally saved configuration |
@@ -81,6 +81,29 @@ Reads source renders from `raw/` and writes responsive AVIF/WebP plus derived ga
 | `/about` | About | Editorial brand story, three principles, fictional chronology, explicit disclosure section |
 | `/legal/:section` | Legal | Privacy, terms, storage/cookies and accessibility notices |
 | `*` | Not found | Designed 404 with recovery links |
+
+### Immersive scroll systems (added in the second pass)
+
+The flagship collection page is now a scroll-driven universe in its own right, built from original
+interactions rather than copied sequences:
+
+1. **Scroll-rotated 3D study** (`src/components/three/ScrollStudy.tsx` + `ScrollStudyCanvas.tsx`)
+   A tall section with a sticky stage. Document scroll rotates the procedural watch roughly 345°
+   with a gentle tilt and dolly; four chapters crossfade their copy, and a labelled hotspot travels
+   with the model for the active chapter. A finish switcher (steel/graphite, champagne, oxblood)
+   changes the materials live. Rotation is read from a ref inside `useFrame`, never from React
+   state, so scrolling stays at frame rate. The canvas unmounts its render loop when off-screen
+   (`frameloop="never"`).
+2. **Scroll-scrubbed film** (`src/components/primitives/ScrollFilm.tsx`)
+   A pinned film section where scrolling seeks the video frame by frame. The three films are
+   encoded with a keyframe every 15 frames (`-g 15`) specifically so seeking is smooth, and the
+   scrubber is guarded against overlapping seeks. A play button hands over to continuous playback;
+   playback stops automatically when the section leaves the viewport.
+3. **Graceful alternatives.** Without WebGL, on mobile, or with `prefers-reduced-motion`, the study
+   becomes a labelled four-frame image sequence driven by the same scroll, or a static editorial
+   grid. The film degrades to its poster with the same chapter text. Nothing is scroll-jacked:
+   chapters are buttons, and normal page scrolling is never prevented.
+4. **Reading-progress hairline** under the header, one pixel of champagne, fading in as you scroll.
 
 ### Global systems
 
@@ -133,8 +156,12 @@ Reads source renders from `raw/` and writes responsive AVIF/WebP plus derived ga
   is opt-in. Product photography remains the primary reference.
 - **The boutique locator is an original drawn placeholder**, not a live map; replacing
   `MapPlaceholder` with a real SDK is the documented integration point.
-- **The hero film is an original generated placeholder loop** and can be swapped without code
-  changes; see ASSETS.md.
+- **The films are original generated placeholder loops** (slow push-ins) and can be swapped without
+  code changes; see ASSETS.md.
+- **The reference site named in the brief was not accessible to inspect** (reCAPTCHA gate). The
+  interactions here are an original response to that *genre* of experience — pinned scroll scenes, a
+  rotating product study, hotspots and scrubbed footage — and reproduce no Cartier layout, copy,
+  imagery or animation sequence.
 - **Asset provenance** is documented in ASSETS.md, including which source render drives which page.
 
 ---
@@ -164,6 +191,11 @@ scripts/          optimize-assets.mjs
 ## QA performed
 
 - `npx tsc -b` — strict TypeScript, no unused locals/parameters, passes.
+- `npm run check:render` — server-renders all 29 route examples (including every product slug and
+  the not-found states) to catch render-time errors.
+- Asset audit — every image key referenced by the pages and product data resolves to generated
+  WebP/AVIF files at the declared widths; all six video files exist. A designed fallback panel is
+  shown if any asset is ever missing.
 - `npm run build` — production build succeeds; route chunks generated; Three.js isolated.
 - Manual review of route table, state flows (bag/wishlist persistence, quantity limits, filter
   parameters, form validation, checkout snapshot before bag clear) and responsive breakpoints at

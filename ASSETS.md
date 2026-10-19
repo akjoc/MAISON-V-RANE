@@ -50,18 +50,26 @@ galleries. Missing sources are reported and skipped, so it is safe to re-run at 
 | `campaign-staircase.png` | `campaign-staircase` | 21:9, 640–1920 | homepage campaign, full navigation panel |
 | `boutique-interior.png` | `boutique-interior` | 21:9, 640–1920 | appointments, services, boutiques |
 | `care-service.png` | `care-service` | 21:9, 640–1920 | services, care & repair |
-| `aeroform-lifestyle-wheel.png` | `aeroform-lifestyle-wheel` | 3:4, 480–1024 | lifestyle product gallery entry |
+| `aeroform-lifestyle-wheel.png` | `aeroform-lifestyle-wheel` | 3:4, 480–1024 | reserved (source kept for future crop) |
 
 Derived square crops (dial, case, bracelet and “detail”) are produced automatically for each
 product from its source render, so gallery thumbnails always match the piece.
 
 ## Video
 
-`public/assets/video/aeroform-loop.mp4` and `.webm` are an original nine-second studio loop
-generated from the `hero-wide` render (slow push-in, 1600 × 680, no audio). It is a **replaceable
-placeholder**: swap the files and keep the poster key in `VideoHero`. If the file cannot decode or
-autoplay is blocked, the hero falls back to the poster image and still exposes play/pause and mute
-controls (hidden automatically under `prefers-reduced-motion`).
+Three original nine-second studio films, each generated from one of the renders above. All are
+**replaceable placeholders** — swap the files and keep the poster key in the consuming component.
+
+| File | Derived from | Size / use |
+| --- | --- | --- |
+| `aeroform-loop.mp4` / `.webm` | `hero-wide.png` | 1280 × 544 · homepage hero (autoplay), collection scroll film |
+| `editorial-loop.mp4` / `.webm` | `editorial-collection.png` | 1280 × 542 · homepage scroll-scrubbed film |
+| `atelier-loop.mp4` / `.webm` | `craft-atelier.png` | 1280 × 720 · craftsmanship scroll-scrubbed film |
+
+Encoded with `-g 15` (a keyframe every 0.6 s) so scroll-seeking lands on real frames rather than
+snapping between distant keyframes. No audio track is included. If a file cannot decode, autoplay is
+blocked, or motion is reduced, the poster image and the chapter text remain, and controls are
+disabled rather than faked.
 
 ## Provenance and licensing
 

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSeo } from '../lib/seo'
 import { Media } from '../components/primitives/Media'
@@ -6,6 +6,8 @@ import { ParallaxMedia } from '../components/primitives/ParallaxMedia'
 import { RevealSection } from '../components/primitives/RevealSection'
 import { RevealText, Line } from '../components/primitives/RevealText'
 import { ProductCard } from '../components/primitives/ProductCard'
+import { ScrollStudy, type StudyChapter } from '../components/three/ScrollStudy'
+import { ScrollFilm } from '../components/primitives/ScrollFilm'
 import { Icon } from '../components/primitives/Icon'
 import { products } from '../data/products'
 import { formatPrice } from '../lib/format'
@@ -89,10 +91,36 @@ const straps = [
   { name: 'Ivory textile', material: 'Textile', swatch: '#ded5c4', note: 'Quick-release, graphite keeper.' },
 ]
 
+const studyChapters: StudyChapter[] = chapters.map((c) => ({
+  id: c.id,
+  index: c.index,
+  title: c.title,
+  copy: c.copy,
+  meta: c.meta,
+  imageKey: c.image,
+  alt: c.alt,
+}))
+
+const filmChapters = [
+  {
+    at: 0,
+    title: 'A single pass',
+    copy: 'Light travels the brushed flank of the case in one continuous movement — the finish that takes the longest to learn.',
+  },
+  {
+    at: 0.34,
+    title: 'The dial in shadow',
+    copy: 'The graphite dial shifts from almost black to warm grey as the angle changes, without ever becoming reflective.',
+  },
+  {
+    at: 0.67,
+    title: 'Held in the hand',
+    copy: 'A 40 mm cushion case is small enough to disappear under a cuff. The study is as much about absence as presence.',
+  },
+]
+
 export default function CollectionAeroform() {
-  const [activeChapter, setActiveChapter] = useState(0)
   const [activeStrap, setActiveStrap] = useState(0)
-  const stepsRef = useRef<HTMLDivElement>(null)
 
   useSeo({
     title: 'Aéroform — the collection',
@@ -101,25 +129,6 @@ export default function CollectionAeroform() {
     path: '/collections/aeroform',
     image: '/assets/images/editorial-collection-1600.webp',
   })
-
-  useEffect(() => {
-    const container = stepsRef.current
-    if (!container) return
-    const steps = Array.from(container.querySelectorAll<HTMLElement>('[data-step]'))
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const idx = Number((entry.target as HTMLElement).dataset.step)
-            setActiveChapter(idx)
-          }
-        })
-      },
-      { rootMargin: '-45% 0px -45% 0px', threshold: 0 },
-    )
-    steps.forEach((s) => observer.observe(s))
-    return () => observer.disconnect()
-  }, [])
 
   return (
     <>
@@ -295,69 +304,18 @@ export default function CollectionAeroform() {
         </div>
       </section>
 
-      {/* ——— Chapter story (sticky image + scroll steps) ——— */}
-      <section className="chapter-story" aria-label="Case architecture in four chapters">
-        <div className="container">
-          <div className="chapter-story__head">
-            <p className="eyebrow">
-              <span className="eyebrow__num">04</span> Case architecture
-            </p>
-            <RevealText as="h2">
-              <Line>Four parts,</Line>
-              <Line>considered in order.</Line>
-            </RevealText>
-            <p className="prose">
-              Scroll through the case as the atelier builds it — from the machined block to the last
-              polished chamfer.
-            </p>
-          </div>
-        </div>
-        <div className="container">
-          <div className="chapter-story__grid">
-            <div className="chapter-story__stage-wrap">
-              <div className="chapter-story__stage">
-                <div className="chapter-story__images">
-                  {chapters.map((c, i) => (
-                    <div
-                      key={c.id}
-                      className={`chapter-story__image ${activeChapter === i ? 'is-active' : ''}`}
-                      aria-hidden={activeChapter !== i}
-                    >
-                      <Media
-                        imageKey={c.image}
-                        alt={activeChapter === i ? c.alt : ''}
-                        orientation={c.image.startsWith('macro') ? 'square' : 'square'}
-                        ratio="square"
-                        sizes="(min-width: 900px) 46vw, 92vw"
-                      />
-                    </div>
-                  ))}
-                </div>
-                <div className="chapter-story__badge">
-                  <span className="micro">Chapter</span>
-                  <span className="chapter-story__badge-num tabular">
-                    {chapters[activeChapter].index} / 04
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div className="chapter-story__steps" ref={stepsRef}>
-              {chapters.map((c, i) => (
-                <div
-                  key={c.id}
-                  className={`chapter-step ${activeChapter === i ? 'is-active' : ''}`}
-                  data-step={i}
-                >
-                  <p className="chapter-step__index">{c.index}</p>
-                  <h3>{c.title}</h3>
-                  <p className="chapter-step__copy">{c.copy}</p>
-                  <p className="micro chapter-step__meta">{c.meta}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ——— Scroll-driven 3D study ——— */}
+      <ScrollStudy chapters={studyChapters} id="study" />
+
+      {/* ——— Scroll-scrubbed film ——— */}
+      <ScrollFilm
+        posterKey="hero-wide"
+        posterAlt="Light moving across an Aéroform case on warm stone"
+        eyebrow="Film · Volume I"
+        heading="Light, moved by the scroll."
+        chapters={filmChapters}
+        id="film"
+      />
 
       {/* ——— Dial & bracelet ——— */}
       <section className="section section--lg coll-detail">

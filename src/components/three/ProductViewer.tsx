@@ -11,7 +11,7 @@ interface ProductViewerProps {
   fallbackAlt: string
 }
 
-const MATERIALS: ViewerMaterial[] = [
+const VIS_MATERIALS: ViewerMaterial[] = [
   {
     id: 'steel',
     label: 'Brushed steel · graphite',
@@ -65,7 +65,7 @@ export function ProductViewer({ fallbackImageKey, fallbackAlt }: ProductViewerPr
   const [mounted, setMounted] = useState(false)
   const [failed, setFailed] = useState(false)
   const [visible, setVisible] = useState(true)
-  const [materialId, setMaterialId] = useState(MATERIALS[0].id)
+  const [materialId, setMaterialId] = useState(VIS_MATERIALS[0].id)
   const [autoRotate, setAutoRotate] = useState(true)
   const [hotspots, setHotspots] = useState(true)
   const wrapRef = useRef<HTMLDivElement>(null)
@@ -99,11 +99,12 @@ export function ProductViewer({ fallbackImageKey, fallbackAlt }: ProductViewerPr
                 }
               >
                 <ProductViewerCanvas
-                  materials={MATERIALS}
+                  materials={VIS_MATERIALS}
                   activeMaterialId={materialId}
                   autoRotate={autoRotate && visible}
                   hotspots={hotspots}
                   reducedMotion={reduced}
+                  active={visible}
                 />
               </Suspense>
             </div>
@@ -146,7 +147,7 @@ export function ProductViewer({ fallbackImageKey, fallbackAlt }: ProductViewerPr
       {enabled && !failed && supported && (
         <div className="viewer__bar">
           <div className="viewer__materials" role="radiogroup" aria-label="Study material">
-            {MATERIALS.map((m) => (
+            {VIS_MATERIALS.map((m) => (
               <button
                 key={m.id}
                 type="button"
