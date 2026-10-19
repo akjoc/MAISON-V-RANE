@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react'
-import { gsap, prefersReducedMotion } from '../../lib/motion'
+import { useRef } from 'react'
 import type { Orientation } from '../../lib/assets'
+import { useRangeProgress } from '../../lib/scrollMotion'
+import { useReducedMotion } from '../../hooks/useMediaQuery'
 import { Media } from './Media'
 
 interface ParallaxMediaProps {
@@ -16,7 +17,13 @@ interface ParallaxMediaProps {
   index?: string
 }
 
-/** Slow, controlled image parallax inside a clipping frame. */
+/**
+ * Slow, controlled image parallax inside a clipping frame.
+ *
+ * Progress is read from the element's live bounding box on a shared scroll
+ * frame — no pre-measured trigger ranges, so late-loading images and font swaps
+ * cannot desynchronise it.
+ */
 export function ParallaxMedia({
   imageKey,
   alt,
@@ -30,36 +37,24 @@ export function ParallaxMedia({
   index,
 }: ParallaxMediaProps) {
   const wrapRef = useRef<HTMLDivElement>(null)
+  const innerRef = useRef<HTMLDivElement>(null)
+  const reduced = useReducedMotion()
 
-  useEffect(() => {
-    const wrap = wrapRef.current
-    if (!wrap || prefersReducedMotion()) return
-    const img = wrap.querySelector('img')
-    if (!img) return
-    const tween = gsap.fromTo(
-      img,
-      { yPercent: -strength },
-      {
-        yPercent: strength,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: wrap,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 0.6,
-        },
-      },
-    )
-    return () => {
-      tween.scrollTrigger?.kill()
-      tween.kill()
-    }
-  }, [strength])
+  useRangeProgress(
+    wrapRef,
+    (progress) => {
+      const inner = innerRef.current
+      if (!inner) return
+      const offset = (progress - 0.5) * 2 * strength
+      inner.style.transform = `translate3d(0, ${offset.toFixed(2)}%, 0) scale(1.14)`
+    },
+    { enabled: !reduced },
+  )
 
   return (
     <figure className={`figure parallax ${className}`.trim()}>
       <div ref={wrapRef} style={{ overflow: 'hidden' }}>
-        <div style={{ scale: '1.14' }}>
+        <div ref={innerRef} style={{ transform: 'translate3d(0,0,0) scale(1.14)' }}>
           <Media
             imageKey={imageKey}
             alt={alt}

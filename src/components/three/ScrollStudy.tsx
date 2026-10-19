@@ -1,5 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
-import { ScrollTrigger } from '../../lib/motion'
+import { usePinnedProgress } from '../../lib/scrollMotion'
 import { useReducedMotion } from '../../hooks/useMediaQuery'
 import { Media } from '../primitives/Media'
 import { Icon } from '../primitives/Icon'
@@ -69,38 +69,34 @@ export function ScrollStudy({ chapters, id = 'study' }: ScrollStudyProps) {
   const use3d = webgl && enable3d && !reduced && !isMobile
   const material = STUDY_MATERIALS.find((m) => m.id === materialId) ?? STUDY_MATERIALS[0]
 
-  // Scroll progress → ref (+ chapter index only when it changes).
-  useEffect(() => {
-    const section = sectionRef.current
-    if (!section || reduced) return
-    const trigger = ScrollTrigger.create({
-      trigger: section,
-      start: 'top top',
-      end: 'bottom bottom',
-      onUpdate: (self) => {
-        progressRef.current = self.progress
-        const next = Math.min(chapters.length - 1, Math.floor(self.progress * chapters.length))
-        setChapter((current) => (current === next ? current : next))
-        if (stageRef.current) {
-          stageRef.current.style.setProperty('--study-progress', String(self.progress))
-        }
-        if (!webgl || isMobile) {
-          // Image-sequence fallback: crossfade + slow push-in per chapter.
-          const scaled = self.progress * chapters.length
-          layersRef.current.forEach((layer, i) => {
-            if (!layer) return
-            const distance = scaled - i
-            const opacity = distance < -1 || distance > 1 ? 0 : 1 - Math.min(1, Math.abs(distance))
-            layer.style.opacity = String(Math.max(0.06, opacity))
-            layer.style.transform = `scale(${1.06 + Math.min(1, Math.max(0, distance + 1)) * 0.04})`
-          })
-        }
-      },
-    })
-    return () => {
-      trigger.kill()
-    }
-  }, [chapters.length, reduced, webgl, isMobile])
+  // Scroll progress → ref (+ chapter index only when it changes). Progress is
+  // measured from the section's live rect on every scroll frame, so it stays
+  // correct when images or fonts change the page height above it.
+  usePinnedProgress(
+    sectionRef,
+    (progress) => {
+      progressRef.current = progress
+      if (stageRef.current) {
+        stageRef.current.style.setProperty('--study-progress', String(progress))
+      }
+      if (!use3d) {
+        // Image-sequence fallback: crossfade + slow push-in per chapter.
+        const scaled = progress * chapters.length
+        layersRef.current.forEach((layer, i) => {
+          if (!layer) return
+          const distance = scaled - i
+          const opacity = distance < -1 || distance > 1 ? 0 : 1 - Math.min(1, Math.abs(distance))
+          layer.style.opacity = String(Math.max(0.06, opacity))
+          layer.style.transform = `scale(${1.06 + Math.min(1, Math.max(0, distance + 1)) * 0.04})`
+        })
+      }
+    },
+    {
+      enabled: !reduced,
+      chapters: chapters.length,
+      onChapter: (index) => setChapter((current) => (current === index ? current : index)),
+    },
+  )
 
   // Reduced motion: no long scroll section, just a quiet reveal.
   useEffect(() => {

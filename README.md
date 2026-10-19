@@ -87,6 +87,14 @@ Reads source renders from `raw/` and writes responsive AVIF/WebP plus derived ga
 The flagship collection page is now a scroll-driven universe in its own right, built from original
 interactions rather than copied sequences:
 
+The animation layer is deliberately dependency-light: **no timeline library and no
+pre-measured trigger positions**. Entrances are CSS transitions toggled by an
+`IntersectionObserver` (`RevealSection`, `RevealText`); every scroll-scrubbed value is read from
+the element's live bounding box on a shared `requestAnimationFrame` tick
+(`src/lib/scrollMotion.ts`). That matters for a site built from large lazy images: a trigger-based
+library measures positions once, and every image that loads afterwards shifts those positions and
+silently desynchronises the page.
+
 1. **Scroll-rotated 3D study** (`src/components/three/ScrollStudy.tsx` + `ScrollStudyCanvas.tsx`)
    A tall section with a sticky stage. Document scroll rotates the procedural watch roughly 345°
    with a gentle tilt and dolly; four chapters crossfade their copy, and a labelled hotspot travels
@@ -200,6 +208,12 @@ scripts/          optimize-assets.mjs
 - `npx tsc -b` — strict TypeScript, no unused locals/parameters, passes.
 - `npm run check:render` — server-renders all 29 route examples (including every product slug and
   the not-found states) to catch render-time errors.
+- `npm run check:motion` — builds the real entry as a single script and runs it in jsdom with
+  stubbed `IntersectionObserver`/`matchMedia`: the app must mount, every `.reveal` must arm and
+  reveal, masked headings must reveal, and the study and film must mount. With `SCROLL_TEST=1` it
+  fakes layout rectangles and asserts that a scroll event moves the parallax transform and advances
+  the study to chapter 03. With `REDUCED=1` it asserts the reduced-motion stylesheet is injected,
+  the study falls back to its static grid and the film renders no video.
 - `npm run check:assets` — server-renders 23 routes, harvests all 280 image URLs the components
   actually emit (every `srcset` candidate and poster), and verifies each maps to a file and returns
   200. One real defect was found and fixed this way: the lifestyle frame is portrait while the

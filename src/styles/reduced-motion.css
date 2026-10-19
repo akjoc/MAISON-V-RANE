@@ -58,3 +58,14 @@
     max-height: none;
     opacity: 1;
   }
+
+/* Entrances become immediate; nothing hides behind an observer. */
+.reveal.is-armed,
+.reveal--stagger.is-armed > *,
+.reveal-lines--mask.is-armed .reveal-line__inner {
+  opacity: 1 !important;
+  transform: none !important;
+}
+.marquee__track {
+  animation: none !important;
+}

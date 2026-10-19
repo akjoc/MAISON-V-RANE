@@ -8,3 +8,4 @@ dist
 # Source art is large; the optimised, shipped derivatives live in public/assets.
 raw
 *.tsbuildinfo
+dist-smoke

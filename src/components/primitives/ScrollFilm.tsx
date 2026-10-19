@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { ScrollTrigger } from '../../lib/motion'
+import { usePinnedProgress } from '../../lib/scrollMotion'
 import { imageSrc, imageSrcSet } from '../../lib/assets'
 import { useReducedMotion } from '../../hooks/useMediaQuery'
 import { Icon } from './Icon'
@@ -40,8 +40,9 @@ export function ScrollFilm({
 }: ScrollFilmProps) {
   const sectionRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [progress, setProgress] = useState(0)
+  const [progress] = useState(0)
   const progressRef = useRef(0)
+  const progressBarRef = useRef<HTMLSpanElement>(null)
   const [active, setActive] = useState(0)
   const [ready, setReady] = useState(false)
   const [failed, setFailed] = useState(false)
@@ -83,46 +84,40 @@ export function ScrollFilm({
     }
   }, [mode])
 
-  useEffect(() => {
-    const section = sectionRef.current
-    if (!section || reduced || failed) return
+  // Scroll progress drives the film. Measured live from the section's rect so
+  // the mapping survives layout changes above it.
+  usePinnedProgress(
+    sectionRef,
+    (p) => {
+      progressRef.current = p
+      const bar = progressBarRef.current
+      if (bar) bar.style.transform = `scaleX(${Math.max(0.002, p)})`
 
-    const trigger = ScrollTrigger.create({
-      trigger: section,
-      start: 'top top',
-      end: 'bottom bottom',
-      onUpdate: (self) => {
-        const p = self.progress
-        progressRef.current = p
-        setProgress(p)
-        const next = Math.min(chapters.length - 1, Math.floor(p * chapters.length))
-        setActive((current) => (current === next ? current : next))
-        if (modeRef.current !== 'scroll') return
+      if (modeRef.current !== 'scroll') return
+      const video = videoRef.current
+      if (!video || seeking.current || video.readyState < 2) return
+      const duration = video.duration
+      if (!Number.isFinite(duration) || duration <= 0.1) return
+      const target = Math.min(duration - 0.06, Math.max(0, p * duration))
+      if (Math.abs(video.currentTime - target) < 0.03) return
 
-        const video = videoRef.current
-        if (!video || seeking.current || video.readyState < 2) return
-        const duration = video.duration
-        if (!Number.isFinite(duration) || duration <= 0.1) return
-        const target = Math.min(duration - 0.06, Math.max(0, p * duration))
-        if (Math.abs(video.currentTime - target) < 0.03) return
-
-        seeking.current = true
-        const release = () => {
-          seeking.current = false
-          video.removeEventListener('seeked', release)
-        }
-        video.addEventListener('seeked', release)
-        if (typeof video.fastSeek === 'function') video.fastSeek(target)
-        else video.currentTime = target
-        // A browser that never fires `seeked` must not lock the film up.
-        window.setTimeout(release, 400)
-      },
-    })
-
-    return () => {
-      trigger.kill()
-    }
-  }, [chapters.length, reduced, failed])
+      seeking.current = true
+      const release = () => {
+        seeking.current = false
+        video.removeEventListener('seeked', release)
+      }
+      video.addEventListener('seeked', release)
+      if (typeof video.fastSeek === 'function') video.fastSeek(target)
+      else video.currentTime = target
+      // A browser that never fires `seeked` must not lock the film up.
+      window.setTimeout(release, 400)
+    },
+    {
+      enabled: !reduced && !failed,
+      chapters: chapters.length,
+      onChapter: (index) => setActive((current) => (current === index ? current : index)),
+    },
+  )
 
   // Once the film can seek (or after it has been played), put the frame back
   // under scroll control at the current position.
@@ -237,7 +232,7 @@ export function ScrollFilm({
         </div>
 
         <div className="film__progress" aria-hidden="true">
-          <span style={{ transform: `scaleX(${Math.max(0.002, progress)})` }} />
+          <span ref={progressBarRef} style={{ transform: `scaleX(${Math.max(0.002, progress)})` }} />
         </div>
       </div>
     </section>

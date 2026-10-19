@@ -11,14 +11,14 @@
     "typecheck": "tsc -b --noEmit",
     "optimize-assets": "node scripts/optimize-assets.mjs",
     "check:render": "node scripts/render-check.mjs",
-    "check:assets": "node scripts/asset-audit.mjs"
+    "check:assets": "node scripts/asset-audit.mjs",
+    "check:motion": "vite build --config vite.smoke.config.ts && node scripts/motion-check.mjs"
   },
   "dependencies": {
     "@fontsource/cormorant-garamond": "^5.3.0",
     "@fontsource/jost": "^5.3.0",
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.2",
-    "gsap": "^3.15.0",
     "lenis": "^1.3.27",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { VideoHero } from '../components/primitives/VideoHero'
 import { RevealText, Line } from '../components/primitives/RevealText'
@@ -12,11 +12,15 @@ import { Media } from '../components/primitives/Media'
 import { products } from '../data/products'
 import { homeServices } from '../data/editorial'
 import { useSeo } from '../lib/seo'
-import { gsap, prefersReducedMotion } from '../lib/motion'
+import { useRangeProgress } from '../lib/scrollMotion'
+import { useReducedMotion } from '../hooks/useMediaQuery'
 
 const featured = products.filter((p) => p.featured).slice(0, 3)
 
 export function Home() {
+  const heroRef = useRef<HTMLDivElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
+  const reduced = useReducedMotion()
   useSeo({
     title: 'Mechanical instruments for the open road',
     description:
@@ -25,49 +29,25 @@ export function Home() {
     image: '/assets/images/hero-wide-1600.webp',
   })
 
-  useEffect(() => {
-    if (prefersReducedMotion()) return
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.home-hero__eyebrow, .home-hero__sub, .home-hero__actions',
-        { autoAlpha: 0, y: 18 },
-        { autoAlpha: 1, y: 0, duration: 1.1, delay: 0.45, stagger: 0.12, ease: 'power3.out' },
-      )
-      gsap.fromTo(
-        '.home-hero__meta',
-        { autoAlpha: 0 },
-        { autoAlpha: 1, duration: 1.4, delay: 1.2 },
-      )
-      // The hero settles away as the first section arrives.
-      gsap.to('.vhero__content', {
-        yPercent: -14,
-        autoAlpha: 0.25,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.vhero',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 0.4,
-        },
-      })
-      gsap.to('.vhero__poster, .vhero__video', {
-        scale: 1.12,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.vhero',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 0.6,
-        },
-      })
-    })
-    return () => ctx.revert()
-  }, [])
+  // Hero scroll-out: the copy settles away and the film eases in as the first
+  // section arrives. Measured live each frame, so it cannot fall out of step.
+  useRangeProgress(
+    heroRef,
+    (progress) => {
+      const content = contentRef.current
+      if (!content) return
+      const travel = Math.max(0, progress - 0.35) / 0.65
+      content.style.transform = `translate3d(0, ${(-travel * 34).toFixed(1)}px, 0)`
+      content.style.opacity = String(1 - travel * 0.75)
+    },
+    { enabled: !reduced },
+  )
 
   return (
     <>
+      <div ref={heroRef} className="home-hero-zone">
       <VideoHero posterKey="hero-wide" posterAlt="Aéroform 40 Graphite resting on warm stone in raking light">
-        <div className="vhero__content">
+        <div className="vhero__content" ref={contentRef}>
           <div className="container container--wide">
             <div className="vhero__grid">
               <div>
@@ -108,6 +88,7 @@ export function Home() {
           <span className="pulse" aria-hidden="true" /> Original film study · Aéroform
         </span>
       </VideoHero>
+      </div>
 
       {/* ——— Editorial introduction ——— */}
       <section className="section section--lg home-intro" id="collection">

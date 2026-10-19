@@ -288,6 +288,52 @@
 .reveal {
   will-change: transform, opacity;
 }
+/* Armed only after mount, so the page is readable without JavaScript. */
+.reveal.is-armed {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-y, 26px), 0);
+  transition:
+    opacity 900ms var(--ease-out) var(--reveal-delay, 0s),
+    transform 1000ms var(--ease-out) var(--reveal-delay, 0s);
+}
+.reveal.is-armed.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+/* Staggered groups animate their children, not themselves. */
+.reveal--stagger.is-armed {
+  opacity: 1;
+  transform: none;
+}
+.reveal--stagger.is-armed > * {
+  opacity: 0;
+  transform: translate3d(0, calc(var(--reveal-y, 26px) * 0.7), 0);
+  transition:
+    opacity 820ms var(--ease-out),
+    transform 900ms var(--ease-out);
+}
+.reveal--stagger.is-armed > *:nth-child(1) {
+  transition-delay: calc(var(--reveal-delay, 0s) + 0ms);
+}
+.reveal--stagger.is-armed > *:nth-child(2) {
+  transition-delay: calc(var(--reveal-delay, 0s) + 90ms);
+}
+.reveal--stagger.is-armed > *:nth-child(3) {
+  transition-delay: calc(var(--reveal-delay, 0s) + 180ms);
+}
+.reveal--stagger.is-armed > *:nth-child(4) {
+  transition-delay: calc(var(--reveal-delay, 0s) + 270ms);
+}
+.reveal--stagger.is-armed > *:nth-child(5) {
+  transition-delay: calc(var(--reveal-delay, 0s) + 360ms);
+}
+.reveal--stagger.is-armed > *:nth-child(6) {
+  transition-delay: calc(var(--reveal-delay, 0s) + 450ms);
+}
+.reveal--stagger.is-armed.is-revealed > * {
+  opacity: 1;
+  transform: none;
+}
 .no-motion .reveal {
   opacity: 1 !important;
   transform: none !important;

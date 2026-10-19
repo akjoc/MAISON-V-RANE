@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { Header } from './Header'
 import { Footer } from './Footer'
@@ -8,7 +8,6 @@ import { BagDrawer } from './BagDrawer'
 import { Toasts } from './Toasts'
 import { MotionNotice } from './MotionNotice'
 import { useSmoothScroll, scrollToTop } from '../../hooks/useLenis'
-import { gsap, ScrollTrigger } from '../../lib/motion'
 
 function useScrollManager() {
   const location = useLocation()
@@ -25,7 +24,6 @@ function useScrollManager() {
         const y = el.getBoundingClientRect().top + window.scrollY - 90
         scrollToTop(true)
         window.scrollTo({ top: y, behavior: 'auto' })
-        ScrollTrigger.refresh()
       }
     }, 260)
     return () => window.clearTimeout(t)
@@ -35,23 +33,7 @@ function useScrollManager() {
 export function Layout() {
   useSmoothScroll()
   useScrollManager()
-  const mainRef = useRef<HTMLElement>(null)
   const location = useLocation()
-
-  useEffect(() => {
-    const node = mainRef.current
-    if (!node) return
-    const tween = gsap.fromTo(
-      node,
-      { opacity: 0, y: 8 },
-      { opacity: 1, y: 0, duration: 0.65, ease: 'power2.out', clearProps: 'transform' },
-    )
-    const refresh = window.setTimeout(() => ScrollTrigger.refresh(), 320)
-    return () => {
-      tween.kill()
-      window.clearTimeout(refresh)
-    }
-  }, [location.pathname])
 
   return (
     <>
@@ -59,7 +41,7 @@ export function Layout() {
         Skip to content
       </a>
       <Header />
-      <main id="main" ref={mainRef}>
+      <main id="main" key={location.pathname} className="page-enter">
         <Outlet />
       </main>
       <Footer />

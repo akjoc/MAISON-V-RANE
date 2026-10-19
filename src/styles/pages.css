@@ -4,6 +4,29 @@
 .reveal-lines {
   display: block;
 }
+/* Masked line reveal, driven by a class. */
+.reveal-lines--mask.is-armed .reveal-line__inner {
+  transform: translate3d(0, 112%, 0);
+  transition: transform 1150ms var(--ease-out);
+}
+.reveal-lines--mask.is-revealed .reveal-line__inner {
+  transform: none;
+}
+.reveal-lines--mask .reveal-line:nth-child(1) .reveal-line__inner {
+  transition-delay: var(--line-delay, 0s);
+}
+.reveal-lines--mask .reveal-line:nth-child(2) .reveal-line__inner {
+  transition-delay: calc(var(--line-delay, 0s) + var(--line-stagger, 0.09s));
+}
+.reveal-lines--mask .reveal-line:nth-child(3) .reveal-line__inner {
+  transition-delay: calc(var(--line-delay, 0s) + var(--line-stagger, 0.09s) * 2);
+}
+.reveal-lines--mask .reveal-line:nth-child(4) .reveal-line__inner {
+  transition-delay: calc(var(--line-delay, 0s) + var(--line-stagger, 0.09s) * 3);
+}
+.reveal-lines--mask .reveal-line:nth-child(5) .reveal-line__inner {
+  transition-delay: calc(var(--line-delay, 0s) + var(--line-stagger, 0.09s) * 4);
+}
 .reveal-line {
   display: block;
   overflow: hidden;
@@ -5879,5 +5902,52 @@
   }
   .study__stage {
     height: min(64svh, 520px);
+  }
+}
+
+/* — Hero entrance ———————————————————————————————
+   CSS keyframes rather than a JS tween: the copy always arrives, even if the
+   scroll layer never initialises. */
+.home-hero__eyebrow,
+.home-hero__sub,
+.home-hero__actions,
+.home-hero__meta {
+  animation: hero-rise 900ms var(--ease-out) both;
+}
+.home-hero__eyebrow {
+  animation-delay: 180ms;
+}
+.home-hero__sub {
+  animation-delay: 620ms;
+}
+.home-hero__actions {
+  animation-delay: 760ms;
+}
+.home-hero__meta {
+  animation-delay: 900ms;
+}
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* — Route fade ——————————————————————————————————— */
+.page-enter {
+  animation: page-in 620ms var(--ease-out) both;
+}
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }

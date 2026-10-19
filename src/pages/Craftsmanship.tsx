@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSeo } from '../lib/seo'
 import { Media } from '../components/primitives/Media'
@@ -6,7 +6,8 @@ import { RevealSection } from '../components/primitives/RevealSection'
 import { RevealText, Line } from '../components/primitives/RevealText'
 import { craftsmanshipChapters } from '../data/editorial'
 import { ScrollFilm } from '../components/primitives/ScrollFilm'
-import { gsap, ScrollTrigger, prefersReducedMotion } from '../lib/motion'
+import { usePinnedProgress } from '../lib/scrollMotion'
+import { useReducedMotion } from '../hooks/useMediaQuery'
 
 const sequence = [
   { key: 'macro-case', label: 'The chamfer', meta: '45° · hand-cut' },
@@ -19,41 +20,35 @@ function MaterialSequence() {
   const [active, setActive] = useState(0)
   const sectionRef = useRef<HTMLDivElement>(null)
   const imageRefs = useRef<(HTMLDivElement | null)[]>([])
+  const reduced = useReducedMotion()
 
-  useEffect(() => {
-    if (prefersReducedMotion()) return
+  // Scroll progress drives the sequence: each frame gets a slow push-in and the
+  // active tab follows the section. Measured live, so nothing drifts.
+  usePinnedProgress(
+    sectionRef,
+    (progress) => {
+      const scaled = progress * sequence.length
+      imageRefs.current.forEach((frame, i) => {
+        const img = frame?.querySelector('img')
+        if (!img) return
+        const distance = Math.min(1, Math.max(0, scaled - i))
+        img.style.transform = `scale(${(1.22 - distance * 0.18).toFixed(3)})`
+      })
+    },
+    {
+      enabled: !reduced,
+      chapters: sequence.length,
+      onChapter: (index) => setActive((current) => (current === index ? current : index)),
+    },
+  )
+
+  const goTo = (index: number) => {
     const section = sectionRef.current
     if (!section) return
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          end: '+=2400',
-          scrub: 0.7,
-          pin: true,
-          anticipatePin: 1,
-          onUpdate: (self) => {
-            const index = Math.min(sequence.length - 1, Math.floor(self.progress * sequence.length))
-            setActive(index)
-          },
-        },
-      })
-      imageRefs.current.forEach((el, i) => {
-        if (!el) return
-        tl.fromTo(
-          el.querySelector('img'),
-          { scale: 1.24 },
-          { scale: 1.02, ease: 'none', duration: 1 / sequence.length },
-          i / sequence.length,
-        )
-      })
-    }, section)
-    return () => {
-      ctx.revert()
-      ScrollTrigger.refresh()
-    }
-  }, [])
+    const start = section.getBoundingClientRect().top + window.scrollY
+    const span = section.offsetHeight - window.innerHeight
+    window.scrollTo({ top: start + (span * (index + 0.1)) / sequence.length, behavior: 'smooth' })
+  }
 
   return (
     <div className="sequence" ref={sectionRef}>
@@ -75,7 +70,7 @@ function MaterialSequence() {
                 role="tab"
                 aria-selected={i === active}
                 className={`sequence__tab ${i === active ? 'is-active' : ''}`}
-                onClick={() => setActive(i)}
+                onClick={() => goTo(i)}
               >
                 <span className="sequence__num">{String(i + 1).padStart(2, '0')}</span>
                 <span>{s.label}</span>

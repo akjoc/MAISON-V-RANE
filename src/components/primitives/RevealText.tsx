@@ -1,5 +1,6 @@
-import { createElement, useEffect, useRef, type ElementType, type ReactNode } from 'react'
-import { gsap, prefersReducedMotion } from '../../lib/motion'
+import { createElement, useState, type CSSProperties, type ElementType, type ReactNode } from 'react'
+import { useInView } from '../../lib/scrollMotion'
+import { useIsomorphicLayoutEffect } from '../../hooks/useIsomorphicLayoutEffect'
 
 interface RevealTextProps {
   children: ReactNode
@@ -13,9 +14,11 @@ interface RevealTextProps {
 }
 
 /**
- * Splits a heading/paragraph into line masks and reveals them slowly.
- * The markup stays semantically intact: each visual line is a span inside
- * the original heading element (children are passed as whole lines).
+ * Masked line reveal for display typography.
+ *
+ * Each visual line sits inside an overflow-hidden mask; the inner span slides
+ * up when the heading enters the viewport. CSS only — the observer just adds a
+ * class, so a misfiring animation cannot leave a heading off-screen.
  */
 export function RevealText({
   children,
@@ -23,41 +26,36 @@ export function RevealText({
   className = '',
   immediate = false,
   delay = 0,
-  stagger = 0.08,
+  stagger = 0.09,
   id,
 }: RevealTextProps) {
-  const ref = useRef<HTMLElement | null>(null)
+  const { ref, inView } = useInView<HTMLElement>({ rootMargin: '0px 0px -6% 0px' })
+  const [armed, setArmed] = useState(false)
 
-  useEffect(() => {
-    const node = ref.current
-    if (!node) return
-    const lines = node.querySelectorAll<HTMLElement>('[data-line]')
-    if (lines.length === 0) return
-    if (prefersReducedMotion()) {
-      gsap.set(lines, { yPercent: 0, autoAlpha: 1 })
-      return
-    }
-    const tween = gsap.fromTo(
-      lines,
-      { yPercent: 118 },
-      {
-        yPercent: 0,
-        duration: 1.25,
-        delay,
-        stagger,
-        ease: 'power4.out',
-        scrollTrigger: immediate ? undefined : { trigger: node, start: 'top 88%', once: true },
-      },
-    )
-    return () => {
-      tween.scrollTrigger?.kill()
-      tween.kill()
-    }
-  }, [immediate, delay, stagger])
+  useIsomorphicLayoutEffect(() => setArmed(true), [])
+
+  const revealed = immediate ? armed : inView
+  const style = {
+    '--line-delay': `${delay}s`,
+    '--line-stagger': `${stagger}s`,
+  } as CSSProperties
 
   return createElement(
     as,
-    { ref, className, id },
+    {
+      ref,
+      id,
+      style,
+      className: [
+        'reveal-lines',
+        'reveal-lines--mask',
+        className,
+        armed ? 'is-armed' : '',
+        revealed ? 'is-revealed' : '',
+      ]
+        .filter(Boolean)
+        .join(' '),
+    },
     <span className="reveal-lines">{children}</span>,
   )
 }

@@ -1,6 +1,5 @@
 import Lenis from 'lenis'
 import { useEffect } from 'react'
-import { gsap, ScrollTrigger, registerMotion } from '../lib/motion'
 import { useReducedMotion } from './useMediaQuery'
 
 let lenisInstance: Lenis | null = null
@@ -33,14 +32,13 @@ export function scrollToTop(immediate = false) {
 }
 
 /**
- * Smooth scrolling with Lenis, wired to GSAP's ticker and ScrollTrigger.
+ * Smooth scrolling with Lenis, driven by its own requestAnimationFrame loop.
  * Disabled entirely when the visitor prefers reduced motion.
  */
 export function useSmoothScroll() {
   const reduced = useReducedMotion()
 
   useEffect(() => {
-    registerMotion()
     if (reduced) {
       document.documentElement.classList.add('no-smooth-scroll')
       return
@@ -54,20 +52,15 @@ export function useSmoothScroll() {
     })
     lenisInstance = lenis
 
-    lenis.on('scroll', ScrollTrigger.update)
-
+    let frame = 0
     const tick = (time: number) => {
-      lenis.raf(time * 1000)
+      lenis.raf(time)
+      frame = window.requestAnimationFrame(tick)
     }
-    gsap.ticker.add(tick)
-    gsap.ticker.lagSmoothing(0)
-
-    const refresh = () => ScrollTrigger.refresh()
-    window.addEventListener('load', refresh)
+    frame = window.requestAnimationFrame(tick)
 
     return () => {
-      window.removeEventListener('load', refresh)
-      gsap.ticker.remove(tick)
+      window.cancelAnimationFrame(frame)
       lenis.destroy()
       lenisInstance = null
       document.documentElement.classList.remove('no-smooth-scroll')
