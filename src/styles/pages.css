@@ -5060,7 +5060,7 @@
    ========================================================================== */
 .study {
   position: relative;
-  height: 420vh;
+  height: 350vh;
   background: var(--graphite);
   color: var(--ivory);
 }
@@ -5344,7 +5344,7 @@
 }
 @media (max-width: 1023px) {
   .study {
-    height: 360vh;
+    height: 300vh;
   }
   .study__grid {
     grid-template-columns: minmax(0, 1fr);
@@ -5458,7 +5458,7 @@
    ========================================================================== */
 .film {
   position: relative;
-  height: 320vh;
+  height: 270vh;
   background: #121210;
   color: var(--ivory);
 }
@@ -5633,7 +5633,7 @@
 }
 @media (max-width: 860px) {
   .film {
-    height: 300vh;
+    height: 250vh;
   }
   .film__content {
     flex-direction: column;

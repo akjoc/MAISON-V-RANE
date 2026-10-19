@@ -48,6 +48,24 @@ export function ScrollFilm({
     setReduced(prefersReducedMotion())
   }, [])
 
+  // Fetch the film only when the section approaches the viewport.
+  useEffect(() => {
+    const video = videoRef.current
+    const section = sectionRef.current
+    if (!video || !section || reduced || failed) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || video.dataset.loaded === 'true') return
+        video.dataset.loaded = 'true'
+        video.preload = 'auto'
+        video.load()
+      },
+      { rootMargin: '400px 0px' },
+    )
+    observer.observe(section)
+    return () => observer.disconnect()
+  }, [reduced, failed])
+
   useEffect(() => {
     const video = videoRef.current
     if (!video || !ready || reduced || failed) return
@@ -144,7 +162,7 @@ export function ScrollFilm({
               poster={poster}
               muted
               playsInline
-              preload="auto"
+              preload="none"
               loop
               aria-label="Original studio film: light moving across an Aéroform case"
               onLoadedMetadata={() => setReady(true)}
