@@ -1,0 +1,353 @@
+/* ==========================================================================
+   MAISON VÉRANE — Find Your Aéroform Interactive Configurator
+   Inspired by Cartier Roadster Universe 3D showcase
+   ========================================================================== */
+
+.fya-section {
+  position: relative;
+  background: #ffffff;
+  color: #111111;
+  padding: clamp(3.5rem, 6vw, 6.5rem) 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.fya-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.fya-header__title {
+  font-family: var(--font-sans, 'Jost', sans-serif);
+  font-size: clamp(14px, 1.3vw, 18px);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #111111;
+  margin: 0;
+}
+
+.fya-header__shop-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #000000;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 10px 24px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: 1px solid #000000;
+}
+
+.fya-header__shop-btn:hover {
+  background: #2b2b2b;
+  border-color: #2b2b2b;
+  transform: translateY(-1px);
+}
+
+/* Grid layout */
+.fya-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.85fr);
+  gap: clamp(2rem, 4vw, 5rem);
+  align-items: center;
+}
+
+/* 3D Visualizer Stage */
+.fya-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.05 / 1;
+  min-height: 440px;
+  max-height: 600px;
+  background: radial-gradient(circle at 50% 45%, #faf8f5 0%, #f1eee8 70%, #eae6de 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+/* Cartier signature horizon line */
+.fya-stage__horizon {
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  top: 62%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.12) 20%, rgba(0, 0, 0, 0.22) 50%, rgba(0, 0, 0, 0.12) 80%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.fya-stage__canvas-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  cursor: grab;
+}
+
+.fya-stage__canvas-wrap:active {
+  cursor: grabbing;
+}
+
+.fya-stage__badge {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(8px);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #666666;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* Fallback / Loading */
+.fya-stage__fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.fya-stage__fallback img {
+  max-width: 68%;
+  max-height: 68%;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.18));
+}
+
+.fya-stage__loading-pill {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.75);
+  color: #ffffff;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  padding: 8px 18px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  z-index: 3;
+}
+
+/* Configurator Panel */
+.fya-config {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 10px 0;
+}
+
+.fya-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fya-group__label {
+  font-size: 13px;
+  color: #555555;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+.fya-group__label strong {
+  color: #111111;
+  font-weight: 500;
+}
+
+/* Size Buttons */
+.fya-sizes {
+  display: flex;
+  gap: 12px;
+}
+
+.fya-size-btn {
+  flex: 1;
+  max-width: 170px;
+  padding: 13px 20px;
+  border: 1px solid #dcdcdc;
+  background: #fbfbfb;
+  color: #666666;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.fya-size-btn:hover {
+  border-color: #999999;
+  color: #111111;
+  background: #ffffff;
+}
+
+.fya-size-btn.is-active {
+  border: 2px solid #000000;
+  background: #ffffff;
+  color: #000000;
+  font-weight: 600;
+}
+
+/* Swatches */
+.fya-swatches {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.fya-swatch {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: 2px;
+  padding: 2px;
+  background: transparent;
+  border: 1px solid #dcdcdc;
+  cursor: pointer;
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+
+.fya-swatch:hover {
+  transform: translateY(-2px);
+  border-color: #888888;
+}
+
+.fya-swatch.is-active {
+  border: 2px solid #000000;
+  outline: 2px solid rgba(0, 0, 0, 0.12);
+  outline-offset: 1px;
+}
+
+.fya-swatch__inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 1px;
+  display: block;
+}
+
+/* Swatch gradient variations */
+.fya-swatch--gold {
+  background: linear-gradient(135deg, #f7e7be 0%, #d4af37 50%, #9e7f48 100%);
+}
+
+.fya-swatch--twotone {
+  background: linear-gradient(135deg, #deded9 48%, #ffffff 49%, #d4af37 51%, #a88837 100%);
+}
+
+.fya-swatch--steel {
+  background: linear-gradient(135deg, #f2f2ee 0%, #b8b7ae 50%, #7d7c75 100%);
+}
+
+.fya-swatch--blue {
+  background: linear-gradient(135deg, #374b62 0%, #152438 100%);
+}
+
+.fya-swatch--oxblood {
+  background: linear-gradient(135deg, #7c2b30 0%, #431114 100%);
+}
+
+.fya-swatch--strap-bracelet {
+  background: linear-gradient(135deg, #e3e2dc 0%, #9e9d96 50%, #b8b6af 100%);
+}
+
+.fya-swatch--strap-leather {
+  background: linear-gradient(135deg, #443224 0%, #281d15 100%);
+  position: relative;
+}
+
+.fya-swatch--strap-leather::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border: 1px dashed rgba(255, 255, 255, 0.35);
+}
+
+.fya-swatch--strap-rubber {
+  background: #191b1d;
+}
+
+/* Purchase Button */
+.fya-action {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fya-purchase-btn {
+  width: 100%;
+  max-width: 380px;
+  background: #000000;
+  color: #ffffff;
+  border: 1px solid #000000;
+  padding: 16px 28px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.fya-purchase-btn:hover {
+  background: #222222;
+  border-color: #222222;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+}
+
+.fya-reassurance {
+  font-size: 12px;
+  color: #777777;
+  line-height: 1.7;
+  max-width: 380px;
+  margin: 0;
+  font-family: var(--font-display, Georgia, serif);
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  .fya-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .fya-stage {
+    min-height: 380px;
+  }
+  .fya-purchase-btn {
+    max-width: 100%;
+  }
+  .fya-reassurance {
+    max-width: 100%;
+  }
+}

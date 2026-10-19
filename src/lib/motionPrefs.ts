@@ -19,19 +19,18 @@ const listeners = new Set<() => void>()
 let watchingSystem = false
 
 function readMode(): MotionMode {
-  if (typeof window === 'undefined') return 'system'
+  if (typeof window === 'undefined') return 'full'
   try {
     const stored = window.localStorage.getItem(STORAGE_KEY)
     if (stored === 'full' || stored === 'reduced') return stored
   } catch {
     /* private browsing */
   }
-  return 'system'
+  return 'full'
 }
 
 export function systemPrefersReduced(): boolean {
-  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return false
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  return false
 }
 
 export function getMotionMode(): MotionMode {
@@ -40,9 +39,8 @@ export function getMotionMode(): MotionMode {
 
 /** True when the visitor is currently seeing the static version of the site. */
 export function isMotionReduced(): boolean {
-  if (mode === 'full') return false
   if (mode === 'reduced') return true
-  return systemPrefersReduced()
+  return false
 }
 
 function notify() {

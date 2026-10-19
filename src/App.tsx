@@ -22,6 +22,7 @@ const Account = lazy(() => import('./pages/Account'))
 const Info = lazy(() => import('./pages/Info'))
 const Legal = lazy(() => import('./pages/Legal'))
 const NotFound = lazy(() => import('./pages/NotFound'))
+const Admin = lazy(() => import('./pages/Admin'))
 
 function RouteFallback() {
   return (
@@ -35,6 +36,14 @@ export function App() {
   return (
     <UIProvider>
       <Routes>
+        <Route
+          path="admin"
+          element={
+            <Suspense fallback={<RouteFallback />}>
+              <Admin />
+            </Suspense>
+          }
+        />
         <Route element={<Layout />}>
           <Route index element={<Home />} />
           <Route

@@ -14,6 +14,9 @@ import { homeServices } from '../data/editorial'
 import { useSeo } from '../lib/seo'
 import { useRangeProgress } from '../lib/scrollMotion'
 import { useReducedMotion } from '../hooks/useMediaQuery'
+import { FindYourAeroform } from '../components/home/FindYourAeroform'
+import { RoadsterDesignCodes } from '../components/home/RoadsterDesignCodes'
+import { RoadsterCollectionGrid } from '../components/home/RoadsterCollectionGrid'
 
 const featured = products.filter((p) => p.featured).slice(0, 3)
 
@@ -71,6 +74,16 @@ export function Home() {
                   <Link to="/appointments" className="btn btn--ghost-light">
                     <span>Book an appointment</span>
                   </Link>
+                  <Link
+                    to="/admin"
+                    className="btn btn--ghost-light"
+                    style={{ borderColor: 'rgba(195,168,120,0.5)', color: 'var(--champagne, #c3a878)' }}
+                    title="Open Atelier Content Studio & Admin"
+                  >
+                    <span>
+                      Atelier Studio (Admin) <Icon name="arrow-right" size={13} />
+                    </span>
+                  </Link>
                 </div>
               </div>
               <div className="vhero__aside home-hero__meta">
@@ -79,6 +92,11 @@ export function Home() {
                 </p>
                 <p className="micro" style={{ color: 'rgba(242,236,226,.55)' }}>
                   Steel · champagne · oxblood
+                </p>
+                <p className="micro" style={{ marginTop: '0.4rem' }}>
+                  <Link to="/admin" style={{ color: 'var(--champagne, #c3a878)', textDecoration: 'underline' }}>
+                    Atelier Studio / Admin ↗
+                  </Link>
                 </p>
               </div>
             </div>
@@ -182,6 +200,12 @@ export function Home() {
           </div>
         </div>
       </section>
+
+      {/* ——— FIND YOUR AÉROFORM: Cartier Roadster style 3D interactive configurator ——— */}
+      <FindYourAeroform />
+
+      {/* ——— DESIGN CODES: Staggered Macro Details Gallery matching Cartier Roadster ——— */}
+      <RoadsterDesignCodes />
 
       <Marquee
         items={[
@@ -361,6 +385,9 @@ export function Home() {
         </div>
       </section>
 
+      {/* ——— CARTIER STYLE COLLECTION SHOWCASE GRID ——— */}
+      <RoadsterCollectionGrid />
+
       {/* ——— Materials ——— */}
       <section className="section section--lg home-materials">
         <div className="container">
@@ -486,6 +513,63 @@ export function Home() {
             </ul>
             <p className="field__hint">All locations are fictional in this prototype.</p>
           </RevealSection>
+        </div>
+      </section>
+
+      {/* ——— Atelier Content Studio (Admin Portal) ——— */}
+      <section
+        className="section"
+        style={{
+          background: 'var(--graphite, #1b1b19)',
+          color: 'var(--ivory, #f2ece2)',
+          borderTop: '1px solid rgba(242, 236, 226, 0.1)',
+          paddingTop: '3.75rem',
+          paddingBottom: '3.75rem',
+        }}
+      >
+        <div className="container">
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: '1.75rem',
+              background: 'rgba(255, 255, 255, 0.03)',
+              border: '1px solid rgba(242, 236, 226, 0.12)',
+              borderRadius: '2px',
+              padding: 'clamp(1.5rem, 3vw, 2.5rem)',
+            }}
+          >
+            <div style={{ maxWidth: '640px' }}>
+              <p className="eyebrow" style={{ color: 'var(--champagne, #c3a878)', marginBottom: '0.65rem' }}>
+                Atelier Administration · Content Studio
+              </p>
+              <h2 style={{ fontSize: 'clamp(1.4rem, 2.2vw, 2rem)', margin: '0 0 0.75rem', color: '#ffffff' }}>
+                MAISON VÉRANE · <em>Content Studio</em>
+              </h2>
+              <p style={{ color: 'rgba(242, 236, 226, 0.72)', fontSize: '0.92rem', lineHeight: '1.7', margin: 0 }}>
+                Manage Aéroform campaign chapters, timepiece references, photography archives, and client appointment enquiries through the dedicated atelier CMS.
+              </p>
+            </div>
+            <div>
+              <Link
+                to="/admin"
+                className="btn btn--light"
+                style={{
+                  background: 'var(--champagne, #c3a878)',
+                  borderColor: 'var(--champagne, #c3a878)',
+                  color: '#101820',
+                  fontWeight: 500,
+                  padding: '0.85rem 1.6rem',
+                }}
+              >
+                <span>
+                  Enter Atelier Studio (/admin) <Icon name="arrow-right" size={14} />
+                </span>
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </>

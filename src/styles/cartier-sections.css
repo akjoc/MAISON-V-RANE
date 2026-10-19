@@ -1,0 +1,304 @@
+/* ==========================================================================
+   MAISON VÉRANE — Cartier Roadster Universe Inspired Sections
+   1. Staggered Macro Design Codes Gallery
+   2. Reference Collection Showcase Grid
+   ========================================================================== */
+
+/* Design Codes Gallery */
+.rd-codes {
+  position: relative;
+  background: #fbf9f5;
+  color: #111111;
+  padding: clamp(4.5rem, 8vw, 8.5rem) 0;
+  overflow: hidden;
+}
+
+.rd-codes__head {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto clamp(3rem, 6vw, 5rem);
+}
+
+.rd-codes__eyebrow {
+  font-family: var(--font-sans, 'Jost', sans-serif);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--champagne-deep, #a58a5d);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.rd-codes__title {
+  font-family: var(--font-display, Georgia, serif);
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 300;
+  line-height: 1.15;
+  margin: 0 0 16px;
+  color: #111111;
+}
+
+.rd-codes__desc {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #555555;
+  margin: 0;
+}
+
+/* Staggered masonry grid matching Cartier */
+.rd-codes__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 4vw, 4.5rem);
+  align-items: start;
+}
+
+.rd-codes__col {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 5vw, 5rem);
+}
+
+.rd-codes__col--offset {
+  margin-top: clamp(2rem, 5vw, 6rem);
+}
+
+.rd-card {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.rd-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.08);
+}
+
+.rd-card__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #f4f2ee;
+}
+
+.rd-card__media--tall {
+  aspect-ratio: 3 / 4;
+}
+
+.rd-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rd-card:hover .rd-card__img {
+  transform: scale(1.04);
+}
+
+.rd-card__body {
+  padding: 24px 28px 28px;
+}
+
+.rd-card__num {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--champagne-deep, #a58a5d);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.rd-card__heading {
+  font-family: var(--font-display, Georgia, serif);
+  font-size: 22px;
+  font-weight: 400;
+  margin: 0 0 10px;
+  color: #111111;
+}
+
+.rd-card__text {
+  font-size: 13px;
+  line-height: 1.65;
+  color: #666666;
+  margin: 0;
+}
+
+/* ==========================================================================
+   Collection Showcase Grid (Cartier "Select your piece" style)
+   ========================================================================== */
+.rd-collection {
+  position: relative;
+  background: #ffffff;
+  color: #111111;
+  padding: clamp(4.5rem, 8vw, 8rem) 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.rd-collection__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.rd-collection__title-area {
+  max-width: 540px;
+}
+
+.rd-collection__eyebrow {
+  font-family: var(--font-sans, 'Jost', sans-serif);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--champagne-deep, #a58a5d);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.rd-collection__title {
+  font-family: var(--font-display, Georgia, serif);
+  font-size: clamp(26px, 3.5vw, 42px);
+  font-weight: 300;
+  line-height: 1.15;
+  margin: 0 0 10px;
+  color: #111111;
+}
+
+.rd-collection__sub {
+  font-size: 13px;
+  color: #666666;
+  margin: 0;
+}
+
+/* Rows of 2 or 3 watches */
+.rd-row-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.5rem, 3vw, 3rem);
+  margin-bottom: clamp(1.5rem, 3vw, 3rem);
+}
+
+.rd-row-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.rd-watch-card {
+  position: relative;
+  background: #f8f6f2;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: clamp(24px, 4vw, 42px) 24px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.35s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.rd-watch-card:hover {
+  background: #ffffff;
+  transform: translateY(-8px);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.09);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.rd-watch-card__stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1.1;
+  max-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 22px;
+}
+
+.rd-watch-card__img {
+  max-width: 82%;
+  max-height: 88%;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.14));
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rd-watch-card:hover .rd-watch-card__img {
+  transform: scale(1.06);
+}
+
+.rd-watch-card__name {
+  font-family: var(--font-display, Georgia, serif);
+  font-size: 19px;
+  font-weight: 400;
+  margin: 0 0 6px;
+  color: #111111;
+  letter-spacing: 0.01em;
+}
+
+.rd-watch-card__spec {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #777777;
+  margin: 0 0 12px;
+}
+
+.rd-watch-card__price {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111111;
+  margin: 0 0 16px;
+}
+
+.rd-watch-card__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #000000;
+  border-bottom: 1px solid #000000;
+  padding-bottom: 2px;
+  transition: color 0.2s, border-color 0.2s;
+  background: transparent;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.rd-watch-card:hover .rd-watch-card__btn {
+  color: var(--champagne-deep, #a58a5d);
+  border-color: var(--champagne-deep, #a58a5d);
+}
+
+@media (max-width: 900px) {
+  .rd-codes__grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .rd-codes__col--offset {
+    margin-top: 0;
+  }
+  .rd-row-2 {
+    grid-template-columns: 1fr;
+  }
+  .rd-row-3 {
+    grid-template-columns: 1fr;
+  }
+}

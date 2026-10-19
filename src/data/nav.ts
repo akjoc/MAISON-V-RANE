@@ -159,6 +159,7 @@ export const footerNav = [
       { label: 'Personalisation', to: '/services/personalisation' },
       { label: 'Search', to: '/search' },
       { label: 'Demo account', to: '/account' },
+      { label: 'Atelier Studio (Admin)', to: '/admin' },
     ],
   },
 ]

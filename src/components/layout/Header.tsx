@@ -81,6 +81,12 @@ export function Header() {
         <span>
           <Link to="/about#disclaimer">All products &amp; services are demonstration content</Link>
         </span>
+        <span className="announce__dot" aria-hidden="true" />
+        <span>
+          <Link to="/admin" style={{ color: 'var(--champagne, #c3a878)', fontWeight: 500 }}>
+            Atelier Studio (Admin) ↗
+          </Link>
+        </span>
       </div>
       <header
         className={`hdr ${condensed ? 'is-condensed' : ''} ${openIndex !== null ? 'is-panel-open' : ''}`}
