@@ -1,0 +1,135 @@
+{
+  "generated": "2026-10-19T19:02:15.737Z",
+  "images": [
+    {
+      "key": "hero-wide",
+      "widths": [
+        640,
+        960,
+        1280,
+        1600,
+        1920
+      ],
+      "source": "hero-wide.png"
+    },
+    {
+      "key": "hero-vertical",
+      "widths": [
+        480,
+        768,
+        1024
+      ],
+      "source": "hero-vertical.png"
+    },
+    {
+      "key": "hero-flagship",
+      "widths": [
+        480,
+        768,
+        1024
+      ],
+      "source": "hero-flagship.png"
+    },
+    {
+      "key": "editorial-collection",
+      "widths": [
+        640,
+        960,
+        1280,
+        1600,
+        1920
+      ],
+      "source": "editorial-collection.png"
+    },
+    {
+      "key": "craft-atelier",
+      "widths": [
+        640,
+        960,
+        1280,
+        1600,
+        1920
+      ],
+      "source": "craft-atelier.png"
+    },
+    {
+      "key": "macro-dial",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "source": "macro-dial.png"
+    },
+    {
+      "key": "macro-bracelet",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "source": "macro-bracelet.png"
+    },
+    {
+      "key": "macro-case",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "source": "macro-case.png"
+    },
+    {
+      "key": "material-steel",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "source": "material-steel.png"
+    },
+    {
+      "key": "service-engraving",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "source": "service-engraving.png"
+    },
+    {
+      "key": "aeroform-graphite-case",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "macro-case"
+    },
+    {
+      "key": "hero-vertical-wide",
+      "widths": [
+        640,
+        960,
+        1280,
+        1600,
+        1920
+      ],
+      "derivedFrom": "hero-vertical"
+    }
+  ],
+  "missing": [
+    "movement-macro.png",
+    "campaign-staircase.png",
+    "campaign-garage.png",
+    "boutique-interior.png",
+    "care-service.png",
+    "aeroform-graphite.png",
+    "aeroform-champagne.png",
+    "aeroform-nocturne.png",
+    "aeroform-gt.png",
+    "aeroform-skeleton.png",
+    "aeroform-oxblood.png",
+    "aeroform-lifestyle-wheel.png"
+  ]
+}

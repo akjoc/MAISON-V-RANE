@@ -1,0 +1,11 @@
+# MAISON VÉRANE — fictional prototype
+# Replace the host below with the production domain before launch.
+User-agent: *
+Allow: /
+Disallow: /checkout
+Disallow: /account
+Disallow: /cart
+Disallow: /wishlist
+Disallow: /search
+
+Sitemap: https://maisonverane.example/sitemap.xml
