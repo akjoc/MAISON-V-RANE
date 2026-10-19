@@ -104,6 +104,13 @@ interactions rather than copied sequences:
    grid. The film degrades to its poster with the same chapter text. Nothing is scroll-jacked:
    chapters are buttons, and normal page scrolling is never prevented.
 4. **Reading-progress hairline** under the header, one pixel of champagne, fading in as you scroll.
+5. **Marquee band** on the homepage: a slow ticker whose pace nudges with scroll velocity.
+6. **Motion control.** The header carries a small `Motion on / Motion off` switch. By default the
+   site follows `prefers-reduced-motion`; because that OS setting is frequently off without the
+   visitor knowing, an explicit switch (persisted in `localStorage`) can restore the full
+   experience, and a one-line notice explains the situation when the OS setting is the reason
+   everything is still. Reduced-motion CSS lives in `src/styles/reduced-motion.css` and is injected
+   only while motion is actually reduced, so the switch works without a reload.
 
 ### Global systems
 
@@ -193,9 +200,14 @@ scripts/          optimize-assets.mjs
 - `npx tsc -b` — strict TypeScript, no unused locals/parameters, passes.
 - `npm run check:render` — server-renders all 29 route examples (including every product slug and
   the not-found states) to catch render-time errors.
-- Asset audit — every image key referenced by the pages and product data resolves to generated
-  WebP/AVIF files at the declared widths; all six video files exist. A designed fallback panel is
-  shown if any asset is ever missing.
+- `npm run check:assets` — server-renders 23 routes, harvests all 280 image URLs the components
+  actually emit (every `srcset` candidate and poster), and verifies each maps to a file and returns
+  200. One real defect was found and fixed this way: the lifestyle frame is portrait while the
+  product gallery requested square widths.
+- Images are requested with a cache tag (`?v=4` from `ASSET_VERSION` in `src/lib/assets.ts`) and
+  `Media` re-requests a failing frame up to three times — dropping AVIF and asking for a fresh
+  cache entry — before showing its fallback panel. This survives stale cached 404s from an earlier
+  build, which is the usual cause of a "missing" image that is present on disk.
 - `npm run build` — production build succeeds; route chunks generated; Three.js isolated.
 - Manual review of route table, state flows (bag/wishlist persistence, quantity limits, filter
   parameters, form validation, checkout snapshot before bag clear) and responsive breakpoints at

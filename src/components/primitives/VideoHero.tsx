@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Icon } from './Icon'
 import { useReducedMotion } from '../../hooks/useMediaQuery'
+import { imageSrc, imageSrcSet } from '../../lib/assets'
 
 interface VideoHeroProps {
   posterKey: string
   posterAlt: string
   /** Original, locally generated loop. */
   src?: string
-  webmSrc?: string
   children?: ReactNode
   className?: string
   label?: string
@@ -23,7 +23,6 @@ export function VideoHero({
   posterKey,
   posterAlt,
   src = '/assets/video/aeroform-loop.mp4',
-  webmSrc = '/assets/video/aeroform-loop.webm',
   children,
   className = '',
   label = 'Aéroform, in motion',
@@ -71,7 +70,7 @@ export function VideoHero({
     setMuted(video.muted)
   }
 
-  const poster = `/assets/images/${posterKey}-1600.webp`
+  const poster = imageSrc(posterKey, 1600)
 
   return (
     <section
@@ -81,7 +80,7 @@ export function VideoHero({
       <img
         className="vhero__poster"
         src={poster}
-        srcSet={`/assets/images/${posterKey}-960.webp 960w, /assets/images/${posterKey}-1280.webp 1280w, /assets/images/${posterKey}-1600.webp 1600w, /assets/images/${posterKey}-1920.webp 1920w`}
+        srcSet={imageSrcSet(posterKey, 'wide', 'webp')}
         sizes="100vw"
         alt={posterAlt}
         width={1920}
@@ -107,8 +106,7 @@ export function VideoHero({
             setReady(false)
           }}
         >
-          <source src={webmSrc} type="video/webm" />
-          <source src={src} type="video/mp4" />
+            <source src={src} type="video/mp4" />
         </video>
       )}
       <div className="vhero__scrim" aria-hidden="true" />

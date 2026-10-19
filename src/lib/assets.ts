@@ -17,13 +17,35 @@ export function widthsFor(o: Orientation): number[] {
   return SQUARE_WIDTHS
 }
 
-export function imageSrc(key: string, width: number, ext: 'webp' | 'avif' = 'webp'): string {
-  return `/assets/images/${key}-${width}.${ext}`
+/**
+ * Bumping this invalidates every generated image URL. It exists because
+ * long-lived CDN/browser caches can hold an earlier 404 for a path that has
+ * since been filled in, which leaves a page with permanently "missing" art.
+ */
+export const ASSET_VERSION = '4'
+
+/** Query suffix; `extra` lets a retry ask for a different cache entry. */
+function cacheTag(extra = ''): string {
+  return `?v=${ASSET_VERSION}${extra}`
 }
 
-export function imageSrcSet(key: string, orientation: Orientation, ext: 'webp' | 'avif'): string {
+export function imageSrc(
+  key: string,
+  width: number,
+  ext: 'webp' | 'avif' = 'webp',
+  extra = '',
+): string {
+  return `/assets/images/${key}-${width}.${ext}${cacheTag(extra)}`
+}
+
+export function imageSrcSet(
+  key: string,
+  orientation: Orientation,
+  ext: 'webp' | 'avif',
+  extra = '',
+): string {
   return widthsFor(orientation)
-    .map((w) => `${imageSrc(key, w, ext)} ${w}w`)
+    .map((w) => `${imageSrc(key, w, ext, extra)} ${w}w`)
     .join(', ')
 }
 

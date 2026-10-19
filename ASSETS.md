@@ -11,7 +11,7 @@ crown, bracelet and material finish.
 ```
 public/assets/
   images/   responsive AVIF + WebP derivatives (generated)
-  video/    original studio loop (MP4 H.264 + WebM VP9)
+  video/    original studio loops (MP4 H.264, dense keyframes for scroll scrubbing)
   ASSET-MANIFEST.json   list of generated sets and their widths
 raw/        source PNG renders (not shipped; git-ignored due to size)
 scripts/optimize-assets.mjs   derivation pipeline (sharp)
@@ -62,9 +62,13 @@ Three original nine-second studio films, each generated from one of the renders 
 
 | File | Derived from | Size / use |
 | --- | --- | --- |
-| `aeroform-loop.mp4` / `.webm` | `hero-wide.png` | 1280 × 544 · homepage hero (autoplay), collection scroll film |
-| `editorial-loop.mp4` / `.webm` | `editorial-collection.png` | 1280 × 542 · homepage scroll-scrubbed film |
-| `atelier-loop.mp4` / `.webm` | `craft-atelier.png` | 1280 × 720 · craftsmanship scroll-scrubbed film |
+| `aeroform-loop.mp4` | `hero-wide.png` | 1600 × 680 · 9 s · homepage hero (autoplay) and collection scroll film |
+| `editorial-loop.mp4` | `editorial-collection.png` | 1600 × 686 · 8 s · homepage scroll-scrubbed film |
+| `atelier-loop.mp4` | `craft-atelier.png` | 1280 × 720 · 8 s · craftsmanship scroll-scrubbed film |
+
+All three are H.264 MP4 only (no WebM twin) and are encoded with a keyframe every 8 frames
+(`-g 8 -keyint_min 8 -sc_threshold 0 -movflags +faststart`) so scroll scrubbing lands on a real
+frame immediately instead of waiting for the next keyframe.
 
 Encoded with `-g 15` (a keyframe every 0.6 s) so scroll-seeking lands on real frames rather than
 snapping between distant keyframes. No audio track is included. If a file cannot decode, autoplay is

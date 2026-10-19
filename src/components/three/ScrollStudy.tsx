@@ -1,5 +1,6 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
-import { ScrollTrigger, prefersReducedMotion } from '../../lib/motion'
+import { ScrollTrigger } from '../../lib/motion'
+import { useReducedMotion } from '../../hooks/useMediaQuery'
 import { Media } from '../primitives/Media'
 import { Icon } from '../primitives/Icon'
 import { hasWebGL, type ViewerMaterial } from './viewerSupport'
@@ -45,13 +46,12 @@ export function ScrollStudy({ chapters, id = 'study' }: ScrollStudyProps) {
   const [materialId, setMaterialId] = useState(STUDY_MATERIALS[0].id)
   const [webgl, setWebgl] = useState(false)
   const [enable3d, setEnable3d] = useState(true)
-  const [reduced, setReduced] = useState(() => prefersReducedMotion())
+  const reduced = useReducedMotion()
   const [inView, setInView] = useState(false)
   const isMobile = useIsMobile()
 
   useEffect(() => {
     setWebgl(hasWebGL())
-    setReduced(prefersReducedMotion())
   }, [])
 
   // Pause the WebGL render loop whenever the study is off-screen.

@@ -5,6 +5,7 @@ import { RevealText, Line } from '../components/primitives/RevealText'
 import { RevealSection } from '../components/primitives/RevealSection'
 import { ParallaxMedia } from '../components/primitives/ParallaxMedia'
 import { ScrollFilm } from '../components/primitives/ScrollFilm'
+import { Marquee } from '../components/primitives/Marquee'
 import { ProductCard } from '../components/primitives/ProductCard'
 import { Icon } from '../components/primitives/Icon'
 import { Media } from '../components/primitives/Media'
@@ -37,6 +38,28 @@ export function Home() {
         { autoAlpha: 0 },
         { autoAlpha: 1, duration: 1.4, delay: 1.2 },
       )
+      // The hero settles away as the first section arrives.
+      gsap.to('.vhero__content', {
+        yPercent: -14,
+        autoAlpha: 0.25,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.vhero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 0.4,
+        },
+      })
+      gsap.to('.vhero__poster, .vhero__video', {
+        scale: 1.12,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.vhero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 0.6,
+        },
+      })
     })
     return () => ctx.revert()
   }, [])
@@ -179,6 +202,18 @@ export function Home() {
         </div>
       </section>
 
+      <Marquee
+        items={[
+          'Aéroform 40',
+          'Cushion case, 10.2 mm',
+          'Calibre MV·01',
+          '72-hour reserve',
+          'Brushed steel',
+          'Champagne',
+          'Oxblood',
+        ]}
+      />
+
       {/* ——— Alternating storytelling ——— */}
       <section className="section section--lg home-story">
         <div className="container">
@@ -307,7 +342,6 @@ export function Home() {
         posterKey="editorial-collection"
         posterAlt="Aéroform on a travertine plinth as light moves across the plaster wall"
         src="/assets/video/editorial-loop.mp4"
-        webmSrc="/assets/video/editorial-loop.webm"
         eyebrow="Film · Volume II"
         heading="A room, a plinth, and a single shaft of light."
         chapters={[

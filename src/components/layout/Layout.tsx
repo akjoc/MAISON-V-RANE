@@ -6,6 +6,7 @@ import { NavPanel } from './NavPanel'
 import { SearchOverlay } from './SearchOverlay'
 import { BagDrawer } from './BagDrawer'
 import { Toasts } from './Toasts'
+import { MotionNotice } from './MotionNotice'
 import { useSmoothScroll, scrollToTop } from '../../hooks/useLenis'
 import { gsap, ScrollTrigger } from '../../lib/motion'
 
@@ -66,6 +67,7 @@ export function Layout() {
       <SearchOverlay />
       <BagDrawer />
       <Toasts />
+      <MotionNotice />
     </>
   )
 }

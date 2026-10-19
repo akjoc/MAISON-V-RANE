@@ -3,14 +3,15 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "MAISON V\u00c9RANE \u2014 an original fictional luxury watchmaking experience. A\u00e9roform collection prototype.",
+  "description": "MAISON VÉRANE — an original fictional luxury watchmaking experience. Aéroform collection prototype.",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "tsc -b && vite build",
     "preview": "vite preview --host 0.0.0.0",
     "typecheck": "tsc -b --noEmit",
     "optimize-assets": "node scripts/optimize-assets.mjs",
-    "check:render": "node scripts/render-check.mjs"
+    "check:render": "node scripts/render-check.mjs",
+    "check:assets": "node scripts/asset-audit.mjs"
   },
   "dependencies": {
     "@fontsource/cormorant-garamond": "^5.3.0",

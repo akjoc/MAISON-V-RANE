@@ -1097,3 +1097,62 @@
   color: var(--ink-faint);
   opacity: 0.75;
 }
+
+/* — Marquee ————————————————————————————————
+   Decorative band: two copies of the list scroll left forever. */
+.marquee {
+  position: relative;
+  overflow: hidden;
+  border-block: 1px solid var(--hairline-soft);
+  padding-block: 0.9rem;
+  background: var(--ivory);
+  user-select: none;
+}
+.marquee__lean {
+  will-change: transform;
+}
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation-name: marquee-run;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.marquee__group {
+  display: flex;
+  align-items: center;
+}
+.marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.6rem;
+  padding-inline: 1.6rem;
+  font-size: 10px;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+.marquee__dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent, #7a2b24);
+  opacity: 0.55;
+}
+@keyframes marquee-run {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+/* A pinned strip on a dark section keeps the band from floating. */
+.marquee--ink {
+  background: var(--ink);
+  border-color: rgba(242, 236, 226, 0.12);
+}
+.marquee--ink .marquee__item {
+  color: rgba(242, 236, 226, 0.6);
+}

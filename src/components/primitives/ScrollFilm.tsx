@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import { ScrollTrigger, prefersReducedMotion } from '../../lib/motion'
-import { Icon } from '../primitives/Icon'
+import { ScrollTrigger } from '../../lib/motion'
+import { imageSrc, imageSrcSet } from '../../lib/assets'
+import { useReducedMotion } from '../../hooks/useMediaQuery'
+import { Icon } from './Icon'
 
 export interface FilmChapter {
   at: number
@@ -9,46 +11,50 @@ export interface FilmChapter {
 }
 
 interface ScrollFilmProps {
+  id?: string
+  eyebrow?: string
+  heading: string
+  chapters: FilmChapter[]
   posterKey: string
   posterAlt: string
   src?: string
-  webmSrc?: string
-  eyebrow: string
-  heading: string
-  chapters: FilmChapter[]
-  id?: string
 }
 
 /**
- * A film that is scrubbed by scroll rather than autoplayed: scrolling moves
- * through the footage frame by frame. Playback controls are always available,
- * and reduced motion / unsupported devices get the poster and chapter text.
+ * A film driven by the scrollbar rather than by time.
+ *
+ * The section is taller than the viewport; its stage is pinned and the video's
+ * currentTime is mapped to scroll progress, so moving down the page moves
+ * forward through the shot. Seeking is guarded (one in flight at a time) and
+ * every browser that cannot scrub — or a visitor who prefers reduced motion —
+ * gets the poster and the written chapters instead of a stalled frame.
  */
 export function ScrollFilm({
+  id = 'film',
+  eyebrow = 'Film study',
+  heading,
+  chapters,
   posterKey,
   posterAlt,
   src = '/assets/video/aeroform-loop.mp4',
-  webmSrc = '/assets/video/aeroform-loop.webm',
-  eyebrow,
-  heading,
-  chapters,
-  id = 'film',
 }: ScrollFilmProps) {
   const sectionRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
-  const seeking = useRef(false)
+  const [progress, setProgress] = useState(0)
+  const progressRef = useRef(0)
+  const [active, setActive] = useState(0)
   const [ready, setReady] = useState(false)
   const [failed, setFailed] = useState(false)
-  const [playing, setPlaying] = useState(false)
-  const [reduced, setReduced] = useState(false)
-  const [active, setActive] = useState(0)
-  const [progress, setProgress] = useState(0)
+  const [mode, setMode] = useState<'scroll' | 'play'>('scroll')
+  const modeRef = useRef(mode)
+  const seeking = useRef(false)
+  const reduced = useReducedMotion()
 
   useEffect(() => {
-    setReduced(prefersReducedMotion())
-  }, [])
+    modeRef.current = mode
+  }, [mode])
 
-  // Fetch the film only when the section approaches the viewport.
+  // Load the film when the section nears the viewport.
   useEffect(() => {
     const video = videoRef.current
     const section = sectionRef.current
@@ -57,97 +63,93 @@ export function ScrollFilm({
       ([entry]) => {
         if (!entry.isIntersecting || video.dataset.loaded === 'true') return
         video.dataset.loaded = 'true'
-        video.preload = 'auto'
         video.load()
       },
-      { rootMargin: '400px 0px' },
+      { rootMargin: '300px' },
     )
     observer.observe(section)
     return () => observer.disconnect()
   }, [reduced, failed])
 
+  // Keep the film paused while it is scrub-controlled.
   useEffect(() => {
     const video = videoRef.current
-    if (!video || !ready || reduced || failed) return
+    if (!video) return
+    if (mode === 'scroll') {
+      video.pause()
+      video.muted = true
+    } else {
+      void video.play().catch(() => setMode('scroll'))
+    }
+  }, [mode])
+
+  useEffect(() => {
+    const section = sectionRef.current
+    if (!section || reduced || failed) return
 
     const trigger = ScrollTrigger.create({
-      trigger: sectionRef.current,
+      trigger: section,
       start: 'top top',
       end: 'bottom bottom',
       onUpdate: (self) => {
-        setProgress(self.progress)
-        setActive(Math.min(chapters.length - 1, Math.floor(self.progress * chapters.length)))
-        if (playing) return
-        const duration = video.duration || 9
-        if (!Number.isFinite(duration) || duration <= 0) return
-        const target = Math.min(duration - 0.05, Math.max(0, self.progress * duration))
-        if (Math.abs(video.currentTime - target) < 0.04) return
-        if (seeking.current) return
+        const p = self.progress
+        progressRef.current = p
+        setProgress(p)
+        const next = Math.min(chapters.length - 1, Math.floor(p * chapters.length))
+        setActive((current) => (current === next ? current : next))
+        if (modeRef.current !== 'scroll') return
+
+        const video = videoRef.current
+        if (!video || seeking.current || video.readyState < 2) return
+        const duration = video.duration
+        if (!Number.isFinite(duration) || duration <= 0.1) return
+        const target = Math.min(duration - 0.06, Math.max(0, p * duration))
+        if (Math.abs(video.currentTime - target) < 0.03) return
+
         seeking.current = true
-        const finish = () => {
+        const release = () => {
           seeking.current = false
-          video.removeEventListener('seeked', finish)
+          video.removeEventListener('seeked', release)
         }
-        video.addEventListener('seeked', finish)
-        if (typeof video.fastSeek === 'function') {
-          video.fastSeek(target)
-        } else {
-          video.currentTime = target
-        }
-        window.setTimeout(finish, 400)
+        video.addEventListener('seeked', release)
+        if (typeof video.fastSeek === 'function') video.fastSeek(target)
+        else video.currentTime = target
+        // A browser that never fires `seeked` must not lock the film up.
+        window.setTimeout(release, 400)
       },
     })
+
     return () => {
       trigger.kill()
     }
-  }, [ready, reduced, failed, playing, chapters.length])
+  }, [chapters.length, reduced, failed])
 
-  // Stop continuous playback when the film leaves the viewport.
+  // Once the film can seek (or after it has been played), put the frame back
+  // under scroll control at the current position.
   useEffect(() => {
+    if (!ready || failed || reduced || mode !== 'scroll') return
     const video = videoRef.current
-    const section = sectionRef.current
-    if (!video || !section || !playing) return
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) {
-          video.pause()
-          setPlaying(false)
-        }
-      },
-      { threshold: 0.15 },
-    )
-    observer.observe(section)
-    return () => observer.disconnect()
-  }, [playing])
+    if (!video || !Number.isFinite(video.duration) || video.duration <= 0.1) return
+    const target = Math.min(video.duration - 0.06, Math.max(0, progressRef.current * video.duration))
+    if (Math.abs(video.currentTime - target) > 0.03) video.currentTime = target
+  }, [ready, mode, failed, reduced])
 
-  const togglePlay = async () => {
-    const video = videoRef.current
-    if (!video) return
-    if (video.paused) {
-      try {
-        video.currentTime = 0
-        await video.play()
-        setPlaying(true)
-      } catch {
-        setFailed(true)
-      }
-    } else {
-      video.pause()
-      setPlaying(false)
-    }
-  }
-
-  const poster = `/assets/images/${posterKey}-1600.webp`
-  const showFilm = !reduced && !failed
+  const still = !ready || failed || reduced
+  const current = chapters[Math.min(active, chapters.length - 1)]
 
   return (
-    <section className={`film ${showFilm ? '' : 'film--still'}`} id={id} ref={sectionRef}>
+    <section
+      ref={sectionRef}
+      id={id}
+      className={`film ${still ? 'film--still' : ''}`.trim()}
+      aria-labelledby={`${id}-title`}
+    >
       <div className="film__sticky">
         <div className="film__media">
           <img
-            className={`film__poster ${ready && showFilm ? 'is-hidden' : ''}`}
-            src={poster}
-            srcSet={`/assets/images/${posterKey}-960.webp 960w, /assets/images/${posterKey}-1280.webp 1280w, /assets/images/${posterKey}-1600.webp 1600w, /assets/images/${posterKey}-1920.webp 1920w`}
+            className={`film__poster ${!still ? 'is-hidden' : ''}`}
+            src={imageSrc(posterKey, 1600)}
+            srcSet={imageSrcSet(posterKey, 'wide', 'webp')}
             sizes="100vw"
             alt={posterAlt}
             width={1920}
@@ -155,66 +157,87 @@ export function ScrollFilm({
             loading="lazy"
             decoding="async"
           />
-          {showFilm && (
+          {!reduced && !failed && (
             <video
               ref={videoRef}
-              className={`film__video ${ready ? 'is-ready' : ''}`}
-              poster={poster}
+              className={`film__video ${!still ? 'is-ready' : ''}`}
               muted
               playsInline
+              loop={mode === 'play'}
               preload="none"
-              loop
-              aria-label="Original studio film: light moving across an Aéroform case"
-              onLoadedMetadata={() => setReady(true)}
+              aria-hidden="true"
+              tabIndex={-1}
+              onLoadedData={() => setReady(true)}
               onCanPlay={() => setReady(true)}
-              onError={() => setFailed(true)}
-              onEnded={() => setPlaying(false)}
+              onError={() => {
+                setFailed(true)
+                setReady(false)
+              }}
             >
-              <source src={webmSrc} type="video/webm" />
               <source src={src} type="video/mp4" />
             </video>
           )}
           <div className="film__scrim" aria-hidden="true" />
         </div>
 
-        <div className="container film__content">
-          <div className="film__copy">
+        <div className="film__content">
+          <div className="container">
             <p className="eyebrow film__eyebrow">{eyebrow}</p>
-            <h2>{heading}</h2>
-            <ol className="film__chapters">
-              {chapters.map((c, i) => (
-                <li key={c.title} className={active === i ? 'is-active' : ''}>
-                  <span className="film__chapter-index">{String(i + 1).padStart(2, '0')}</span>
-                  <span>
-                    <span className="film__chapter-title">{c.title}</span>
-                    <span className="film__chapter-copy">{c.copy}</span>
-                  </span>
+            <h2 id={`${id}-title`} className="film__title">
+              {heading}
+            </h2>
+            <div className="film__chapter">
+              <span className="film__chapter-index tabular">
+                {String(active + 1).padStart(2, '0')} / {String(chapters.length).padStart(2, '0')}
+              </span>
+              <h3 className="film__chapter-title">{current?.title}</h3>
+              <p className="film__chapter-copy">{current?.copy}</p>
+            </div>
+            <ol className="film__marks" aria-label="Film chapters">
+              {chapters.map((chapter, i) => (
+                <li key={chapter.title} className={i === active ? 'is-active' : ''}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const section = sectionRef.current
+                      if (!section) return
+                      const start = section.offsetTop
+                      const span = section.offsetHeight - window.innerHeight
+                      window.scrollTo({ top: start + span * chapter.at, behavior: 'smooth' })
+                    }}
+                    aria-current={i === active ? 'true' : undefined}
+                  >
+                    <span className="film__mark-line" aria-hidden="true" />
+                    <span className="film__mark-label">{chapter.title}</span>
+                  </button>
                 </li>
               ))}
             </ol>
-          </div>
-
-          <div className="film__controls">
-            <button
-              type="button"
-              className="film__control"
-              onClick={togglePlay}
-              disabled={!showFilm}
-              aria-pressed={playing}
-            >
-              <Icon name={playing ? 'pause' : 'play'} size={14} />
-              <span>{playing ? 'Pause film' : 'Play the film'}</span>
-            </button>
-            <span className="film__hint">
-              {showFilm
-                ? 'Scroll to move through the film · play to watch continuously'
-                : 'Film unavailable — the poster frame is shown instead'}
-            </span>
+            <div className="film__actions">
+              <button
+                type="button"
+                className="film__play"
+                onClick={() => setMode(mode === 'play' ? 'scroll' : 'play')}
+                disabled={failed || reduced}
+              >
+                <Icon name={mode === 'play' ? 'pause' : 'play'} size={13} />
+                {mode === 'play' ? 'Back to scroll control' : 'Play the film'}
+              </button>
+              <span className="film__hint">
+                {failed
+                  ? 'Film unavailable — still frames shown.'
+                  : reduced
+                    ? 'Motion reduced — still frames shown.'
+                    : mode === 'play'
+                      ? 'Playing · the scroll position is no longer driving the film.'
+                      : 'Scroll to move the film forward.'}
+              </span>
+            </div>
           </div>
         </div>
 
         <div className="film__progress" aria-hidden="true">
-          <span style={{ width: `${Math.round(progress * 100)}%` }} />
+          <span style={{ transform: `scaleX(${Math.max(0.002, progress)})` }} />
         </div>
       </div>
     </section>

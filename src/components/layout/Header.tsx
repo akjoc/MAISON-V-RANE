@@ -5,6 +5,8 @@ import { MegaMenu } from './MegaMenu'
 import { primaryNav } from '../../data/nav'
 import { useUI } from '../../context/UIContext'
 import { useStore } from '../../context/StoreContext'
+import { useReducedMotion } from '../../hooks/useMediaQuery'
+import { getMotionMode, toggleMotion } from '../../lib/motionPrefs'
 
 export function Header() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
@@ -15,6 +17,8 @@ export function Header() {
   const location = useLocation()
   const { searchOpen, openSearch, openNav, navOpen } = useUI()
   const { cartCount, wishlist } = useStore()
+  const reduced = useReducedMotion()
+  const followingSystem = getMotionMode() === 'system'
 
   useEffect(() => {
     setOpenIndex(null)
@@ -85,13 +89,7 @@ export function Header() {
         <div className="hdr__inner">
           <div className="hdr__left">
             <nav className="hdr__nav" aria-label="Primary">
-              <span
-          className="hdr__progress"
-          aria-hidden="true"
-          style={{ transform: `scaleX(${Math.max(progress, 0.002)})` }}
-        />
-
-        {primaryNav.map((item, i) => (
+              {primaryNav.map((item, i) => (
                 <div
                   key={item.label}
                   onMouseEnter={() => {
@@ -129,6 +127,23 @@ export function Header() {
           </Link>
 
           <div className="hdr__right">
+            <button
+              type="button"
+              className={`hdr__motion ${reduced ? 'is-off' : ''}`}
+              onClick={toggleMotion}
+              aria-pressed={!reduced}
+              title={
+                reduced
+                  ? 'Animations are off — turn them on'
+                  : 'Animations are on — reduce them'
+              }
+            >
+              <Icon name={reduced ? 'play' : 'pause'} size={13} />
+              <span className="label">
+                {reduced ? 'Motion off' : 'Motion on'}
+                {followingSystem && <span className="visually-hidden"> (following system setting)</span>}
+              </span>
+            </button>
             <button
               type="button"
               className="hdr__search-wide"

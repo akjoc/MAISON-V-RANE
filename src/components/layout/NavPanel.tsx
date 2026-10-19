@@ -63,7 +63,7 @@ export function NavPanel() {
         </div>
       </div>
       <div className="nav-panel__aside">
-        <Media imageKey="campaign-staircase" alt="Aéroform worn at the base of a travertine staircase" orientation="portrait" sizes="45vw" />
+        <Media imageKey="campaign-staircase" alt="Aéroform worn at the base of a travertine staircase" orientation="wide" sizes="45vw" />
         <div className="nav-panel__caption">
           <span className="eyebrow" style={{ color: 'rgba(242,236,226,.6)' }}>Campaign</span>
           <span className="nav-panel__caption-title">

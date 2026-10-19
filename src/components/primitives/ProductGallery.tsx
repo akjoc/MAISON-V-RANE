@@ -8,6 +8,8 @@ interface GalleryImage {
   key: string
   alt: string
   label: string
+  /** Portrait sources (the lifestyle frame) keep their own width ladder. */
+  orientation?: 'square' | 'portrait' | 'wide'
 }
 
 export function galleryImages(product: Product): GalleryImage[] {
@@ -23,6 +25,7 @@ export function galleryImages(product: Product): GalleryImage[] {
       key: product.images.lifestyle.key,
       alt: product.images.lifestyle.alt,
       label: 'Worn',
+      orientation: 'portrait',
     })
   }
   return base
@@ -96,7 +99,7 @@ export function ProductGallery({ product }: ProductGalleryProps) {
               key={active.key}
               imageKey={active.key}
               alt={active.alt}
-              orientation="square"
+              orientation={active.orientation ?? 'square'}
               ratio="square"
               sizes="(min-width: 1200px) 50vw, (min-width: 768px) 60vw, 100vw"
               priority={index === 0}
@@ -146,7 +149,14 @@ export function ProductGallery({ product }: ProductGalleryProps) {
               className={`gallery__thumb ${i === index ? 'is-active' : ''}`}
               onClick={() => setIndex(i)}
             >
-              <Media imageKey={img.key} alt="" orientation="square" ratio="square" sizes="96px" decorative />
+              <Media
+                imageKey={img.key}
+                alt=""
+                orientation={img.orientation ?? 'square'}
+                ratio="square"
+                sizes="96px"
+                decorative
+              />
               <span className="gallery__thumb-label">{img.label}</span>
             </button>
           ))}

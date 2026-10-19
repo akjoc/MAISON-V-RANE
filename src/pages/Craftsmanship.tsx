@@ -259,7 +259,6 @@ export default function Craftsmanship() {
         posterKey="craft-atelier"
         posterAlt="A watchmaker at the bench under a warm lamp"
         src="/assets/video/atelier-loop.mp4"
-        webmSrc="/assets/video/atelier-loop.webm"
         eyebrow="A short film"
         heading="The bench, at working pace."
         chapters={[

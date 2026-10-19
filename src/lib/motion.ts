@@ -1,5 +1,6 @@
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { isMotionReduced } from './motionPrefs'
 
 let registered = false
 
@@ -12,9 +13,10 @@ export function registerMotion() {
 
 export { gsap, ScrollTrigger }
 
+/** Honours the visitor's explicit Motion choice, then the OS setting. */
 export function prefersReducedMotion(): boolean {
   if (typeof window === 'undefined') return false
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  return isMotionReduced()
 }
 
 /**

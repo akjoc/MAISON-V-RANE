@@ -6,6 +6,7 @@ import { ProductCard } from '../components/primitives/ProductCard'
 import { Icon } from '../components/primitives/Icon'
 import { RevealSection } from '../components/primitives/RevealSection'
 import { formatPrice } from '../lib/format'
+import { imageSrc } from '../lib/assets'
 
 export default function Wishlist() {
   const { wishlist, removeSaved, addToBag } = useStore()
@@ -63,7 +64,7 @@ export default function Wishlist() {
                 <article key={p.id} className="wishlist-row">
                   <div className="wishlist-row__media">
                     <img
-                      src={`/assets/images/${p.images.primary.key}-480.webp`}
+                      src={imageSrc(p.images.primary.key, 480)}
                       alt={p.images.primary.alt}
                       width={480}
                       height={480}
