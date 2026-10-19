@@ -1,0 +1,11 @@
+node_modules
+dist
+*.local
+.DS_Store
+.venv-video
+.env
+.env.*
+# Source art is large; the optimised, shipped derivatives live in public/assets.
+raw
+*.tsbuildinfo
+dist-smoke

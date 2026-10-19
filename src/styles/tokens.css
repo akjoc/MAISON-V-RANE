@@ -1,0 +1,180 @@
+/* ==========================================================================
+   MAISON VÉRANE — Design tokens
+   A quiet palette: warm ivory paper, graphite ink, brushed silver,
+   muted champagne and a single deep oxblood accent.
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Cormorant Garamond V';
+  src: url('/fonts/cormorant-garamond-latin-ext-300-normal.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+2C60-2C7F;
+}
+@font-face {
+  font-family: 'Cormorant Garamond V';
+  src: url('/fonts/cormorant-garamond-latin-300-normal.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Cormorant Garamond V';
+  src: url('/fonts/cormorant-garamond-latin-ext-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+2C60-2C7F;
+}
+@font-face {
+  font-family: 'Cormorant Garamond V';
+  src: url('/fonts/cormorant-garamond-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Cormorant Garamond V';
+  src: url('/fonts/cormorant-garamond-latin-ext-500-normal.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+2C60-2C7F;
+}
+@font-face {
+  font-family: 'Cormorant Garamond V';
+  src: url('/fonts/cormorant-garamond-latin-500-normal.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jost V';
+  src: url('/fonts/jost-latin-ext-300-normal.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+2C60-2C7F;
+}
+@font-face {
+  font-family: 'Jost V';
+  src: url('/fonts/jost-latin-300-normal.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Jost V';
+  src: url('/fonts/jost-latin-ext-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+2C60-2C7F;
+}
+@font-face {
+  font-family: 'Jost V';
+  src: url('/fonts/jost-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Jost V';
+  src: url('/fonts/jost-latin-ext-500-normal.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+2C60-2C7F;
+}
+@font-face {
+  font-family: 'Jost V';
+  src: url('/fonts/jost-latin-500-normal.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* — Surface & ink ————————————————————————————— */
+  --ivory: #f2ece2;
+  --ivory-deep: #eae2d5;
+  --ivory-warm: #f7f2e9;
+  --paper: #fbf8f2;
+  --graphite: #1b1b19;
+  --graphite-soft: #2a2a27;
+  --ink: #23231f;
+  --ink-muted: #5f5c54;
+  --ink-faint: #8b877c;
+  --silver: #b9b7ae;
+  --silver-light: #d7d4c9;
+  --hairline: rgba(35, 35, 31, 0.16);
+  --hairline-soft: rgba(35, 35, 31, 0.08);
+  --hairline-ink: rgba(242, 236, 226, 0.2);
+
+  /* — Accents ————————————————————————————————— */
+  --champagne: #c3a878;
+  --champagne-soft: #d8c7a4;
+  --champagne-deep: #a58a5d;
+  --oxblood: #5e1a1f;
+  --oxblood-deep: #431114;
+  --oxblood-bright: #7c2b30;
+
+  /* — Typography —————————————————————————————— */
+  --font-display: 'Cormorant Garamond V', 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-sans: 'Jost V', 'Jost', 'Helvetica Neue', Arial, sans-serif;
+
+  --step--2: clamp(0.64rem, 0.61rem + 0.13vw, 0.7rem);
+  --step--1: clamp(0.74rem, 0.71rem + 0.14vw, 0.82rem);
+  --step-0: clamp(0.9rem, 0.86rem + 0.2vw, 1.02rem);
+  --step-1: clamp(1.1rem, 1.02rem + 0.38vw, 1.35rem);
+  --step-2: clamp(1.38rem, 1.22rem + 0.78vw, 1.9rem);
+  --step-3: clamp(1.8rem, 1.5rem + 1.5vw, 2.8rem);
+  --step-4: clamp(2.3rem, 1.7rem + 3vw, 4.3rem);
+  --step-5: clamp(2.9rem, 1.8rem + 5.4vw, 6.4rem);
+  --step-6: clamp(3.4rem, 1.6rem + 8.4vw, 9.5rem);
+
+  --tracking-wide: 0.18em;
+  --tracking-wider: 0.26em;
+  --tracking-tight: -0.015em;
+
+  /* — Space & grid ————————————————————————————— */
+  --gutter: clamp(1.15rem, 4vw, 4.5rem);
+  --section-y: clamp(4.5rem, 9vw, 9.5rem);
+  --section-y-lg: clamp(6rem, 13vw, 14rem);
+  --maxw: 1600px;
+  --maxw-text: 66ch;
+  --maxw-narrow: 46rem;
+
+  /* — Motion ——————————————————————————————————— */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 220ms;
+  --dur: 420ms;
+  --dur-slow: 900ms;
+
+  --header-h: 76px;
+  --announce-h: 34px;
+
+  /* — Radius: the maison uses near-square geometry ——— */
+  --radius-xs: 1px;
+  --radius-sm: 2px;
+  --radius-md: 3px;
+
+  --shadow-soft: 0 30px 70px -40px rgba(27, 27, 25, 0.4);
+  --shadow-panel: 0 40px 120px -60px rgba(27, 27, 25, 0.65);
+
+  --z-header: 60;
+  --z-nav: 80;
+  --z-drawer: 90;
+  --z-overlay: 100;
+  --z-toast: 110;
+
+  color-scheme: light;
+}
+
+[data-theme='ink'] {
+  --card-bg: var(--graphite);
+  --card-ink: var(--ivory);
+}

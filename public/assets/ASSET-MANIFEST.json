@@ -1,0 +1,428 @@
+{
+  "generated": "2026-10-19T19:21:53.237Z",
+  "images": [
+    {
+      "key": "hero-wide",
+      "widths": [
+        640,
+        960,
+        1280,
+        1600,
+        1920
+      ],
+      "source": "hero-wide.png"
+    },
+    {
+      "key": "hero-vertical",
+      "widths": [
+        480,
+        768,
+        1024
+      ],
+      "source": "hero-vertical.png"
+    },
+    {
+      "key": "hero-flagship",
+      "widths": [
+        480,
+        768,
+        1024
+      ],
+      "source": "hero-flagship.png"
+    },
+    {
+      "key": "editorial-collection",
+      "widths": [
+        640,
+        960,
+        1280,
+        1600,
+        1920
+      ],
+      "source": "editorial-collection.png"
+    },
+    {
+      "key": "craft-atelier",
+      "widths": [
+        640,
+        960,
+        1280,
+        1600,
+        1920
+      ],
+      "source": "craft-atelier.png"
+    },
+    {
+      "key": "macro-dial",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "source": "macro-dial.png"
+    },
+    {
+      "key": "macro-bracelet",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "source": "macro-bracelet.png"
+    },
+    {
+      "key": "macro-case",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "source": "macro-case.png"
+    },
+    {
+      "key": "material-steel",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "source": "material-steel.png"
+    },
+    {
+      "key": "service-engraving",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "source": "service-engraving.png"
+    },
+    {
+      "key": "movement-macro",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "source": "movement-macro.png"
+    },
+    {
+      "key": "campaign-staircase",
+      "widths": [
+        640,
+        960,
+        1280,
+        1600,
+        1920
+      ],
+      "source": "campaign-staircase.png"
+    },
+    {
+      "key": "boutique-interior",
+      "widths": [
+        640,
+        960,
+        1280,
+        1600,
+        1920
+      ],
+      "source": "boutique-interior.png"
+    },
+    {
+      "key": "care-service",
+      "widths": [
+        640,
+        960,
+        1280,
+        1600,
+        1920
+      ],
+      "source": "care-service.png"
+    },
+    {
+      "key": "aeroform-graphite",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "source": "aeroform-graphite.png"
+    },
+    {
+      "key": "aeroform-champagne",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "source": "aeroform-champagne.png"
+    },
+    {
+      "key": "aeroform-nocturne",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "source": "aeroform-nocturne.png"
+    },
+    {
+      "key": "aeroform-gt",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "source": "aeroform-gt.png"
+    },
+    {
+      "key": "aeroform-skeleton",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "source": "aeroform-skeleton.png"
+    },
+    {
+      "key": "aeroform-oxblood",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "source": "aeroform-oxblood.png"
+    },
+    {
+      "key": "aeroform-graphite-dial",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "aeroform-graphite"
+    },
+    {
+      "key": "aeroform-graphite-case",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "macro-case"
+    },
+    {
+      "key": "aeroform-graphite-detail",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "aeroform-graphite"
+    },
+    {
+      "key": "aeroform-graphite-bracelet",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "aeroform-graphite"
+    },
+    {
+      "key": "aeroform-champagne-dial",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "aeroform-champagne"
+    },
+    {
+      "key": "aeroform-champagne-case",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "aeroform-champagne"
+    },
+    {
+      "key": "aeroform-champagne-detail",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "aeroform-champagne"
+    },
+    {
+      "key": "aeroform-champagne-bracelet",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "aeroform-champagne"
+    },
+    {
+      "key": "aeroform-nocturne-dial",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "aeroform-nocturne"
+    },
+    {
+      "key": "aeroform-nocturne-case",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "aeroform-nocturne"
+    },
+    {
+      "key": "aeroform-nocturne-detail",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "aeroform-nocturne"
+    },
+    {
+      "key": "aeroform-nocturne-bracelet",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "aeroform-nocturne"
+    },
+    {
+      "key": "aeroform-gt-dial",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "aeroform-gt"
+    },
+    {
+      "key": "aeroform-gt-case",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "aeroform-gt"
+    },
+    {
+      "key": "aeroform-gt-detail",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "aeroform-gt"
+    },
+    {
+      "key": "aeroform-gt-bracelet",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "aeroform-gt"
+    },
+    {
+      "key": "aeroform-skeleton-dial",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "aeroform-skeleton"
+    },
+    {
+      "key": "aeroform-skeleton-case",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "aeroform-skeleton"
+    },
+    {
+      "key": "aeroform-skeleton-detail",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "aeroform-skeleton"
+    },
+    {
+      "key": "aeroform-skeleton-bracelet",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "aeroform-skeleton"
+    },
+    {
+      "key": "aeroform-oxblood-dial",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "aeroform-oxblood"
+    },
+    {
+      "key": "aeroform-oxblood-case",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "aeroform-oxblood"
+    },
+    {
+      "key": "aeroform-oxblood-detail",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "aeroform-oxblood"
+    },
+    {
+      "key": "aeroform-oxblood-bracelet",
+      "widths": [
+        480,
+        800,
+        1200
+      ],
+      "derivedFrom": "aeroform-oxblood"
+    },
+    {
+      "key": "hero-vertical-wide",
+      "widths": [
+        640,
+        960,
+        1280,
+        1600,
+        1920
+      ],
+      "derivedFrom": "hero-vertical"
+    }
+  ],
+  "missing": [
+    "campaign-garage.png",
+    "aeroform-lifestyle-wheel.png"
+  ]
+}

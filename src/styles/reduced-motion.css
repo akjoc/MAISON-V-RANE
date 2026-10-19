@@ -1,0 +1,71 @@
+/**
+ * Reduced-motion rules, injected at runtime by src/lib/motionPrefs.ts only
+ * while motion is actually reduced. Keeping them out of a media query means
+ * the "Motion" control in the header can turn the full experience back on,
+ * even on a machine whose OS-level animation setting is off.
+ */
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+/* Study and film stay linear instead of pinning */
+  .reveal-line__inner {
+    transform: none !important;
+  }
+
+  .study {
+    height: auto;
+  }
+  .study__sticky {
+    position: static;
+    height: auto;
+    padding-block: var(--section-y);
+  }
+
+  .film {
+    height: auto;
+  }
+  .film__sticky {
+    position: relative;
+    height: auto;
+    min-height: 0;
+    padding-top: 0;
+  }
+  .film__sticky {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .film__media {
+    position: relative;
+    inset: auto;
+    height: 56svh;
+  }
+  .film__content {
+    position: relative;
+    padding-block: 2rem;
+  }
+  .film__marks li {
+    color: rgba(242, 236, 226, 0.6);
+  }
+  .film__chapter-copy {
+    max-height: none;
+    opacity: 1;
+  }
+
+/* Entrances become immediate; nothing hides behind an observer. */
+.reveal.is-armed,
+.reveal--stagger.is-armed > *,
+.reveal-lines--mask.is-armed .reveal-line__inner {
+  opacity: 1 !important;
+  transform: none !important;
+}
+.marquee__track {
+  animation: none !important;
+}
