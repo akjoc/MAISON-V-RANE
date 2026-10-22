@@ -13,6 +13,7 @@ import { products } from '../data/products'
 import { homeServices } from '../data/editorial'
 import { useSeo } from '../lib/seo'
 import { useRangeProgress } from '../lib/scrollMotion'
+import { assetUrl } from '../lib/assets'
 import { useReducedMotion } from '../hooks/useMediaQuery'
 import { FindYourAeroform } from '../components/home/FindYourAeroform'
 import { RoadsterDesignCodes } from '../components/home/RoadsterDesignCodes'
@@ -346,7 +347,7 @@ export function Home() {
       <ScrollFilm
         posterKey="editorial-collection"
         posterAlt="Aéroform on a travertine plinth as light moves across the plaster wall"
-        src="/assets/video/editorial-loop.mp4"
+        src={assetUrl('assets/video/editorial-loop.mp4')}
         eyebrow="Film · Volume II"
         heading="A room, a plinth, and a single shaft of light."
         chapters={[

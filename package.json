@@ -12,7 +12,11 @@
     "optimize-assets": "node scripts/optimize-assets.mjs",
     "check:render": "node scripts/render-check.mjs",
     "check:assets": "node scripts/asset-audit.mjs",
-    "check:motion": "vite build --config vite.smoke.config.ts && node scripts/motion-check.mjs"
+    "check:motion": "vite build --config vite.smoke.config.ts && node scripts/motion-check.mjs",
+    "build:pages": "GITHUB_PAGES=true npm run build && node scripts/make-pages-404.mjs",
+    "preview:pages": "GITHUB_PAGES=true vite preview --host 0.0.0.0 --port 4173",
+    "verify:pages": "node scripts/verify-pages.mjs",
+    "verify:pages:render": "node scripts/verify-pages-render.mjs"
   },
   "dependencies": {
     "@fontsource/cormorant-garamond": "^5.3.0",
@@ -30,6 +34,7 @@
     "@types/react-dom": "^19.2.0",
     "@types/three": "^0.180.0",
     "@vitejs/plugin-react": "^6.1.2",
+    "jsdom": "^30.1.3",
     "sharp": "^0.35.5",
     "typescript": "~5.9.3",
     "vite": "^8.3.4"

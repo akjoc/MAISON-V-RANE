@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
-import { imageSrc, imageSrcSet, widthsFor, type Orientation } from '../../lib/assets'
+import { imageSrc, imageSrcSet, widthsForKey, type Orientation } from '../../lib/assets'
 
 interface MediaProps {
   imageKey: string
@@ -64,7 +64,7 @@ export function Media({
   const [failed, setFailed] = useState(false)
   const imgRef = useRef<HTMLImageElement>(null)
   const [w, h] = intrinsic[orientation]
-  const largest = widthsFor(orientation).at(-1) ?? w
+  const largest = widthsForKey(imageKey, orientation).at(-1) ?? w
 
   // AVIF is only offered on the first try; retries are WebP-only.
   const offerAvif = attempt === 0

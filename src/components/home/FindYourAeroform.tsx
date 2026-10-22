@@ -6,6 +6,7 @@ import { productById } from '../../data/products'
 import { useReducedMotion } from '../../hooks/useMediaQuery'
 import { hasWebGL, type ViewerMaterial } from '../three/viewerSupport'
 import '../../styles/find-your-aeroform.css'
+import { assetUrl } from '../../lib/assets'
 
 const FindYourAeroformCanvas = lazy(() => import('./FindYourAeroformCanvas'))
 
@@ -35,7 +36,7 @@ const MATERIALS: MaterialConfig[] = [
     roughness: 0.28,
     basePrice: 8450,
     slug: 'aeroform-40-champagne',
-    image: '/assets/images/aeroform-champagne-1200.webp',
+    image: assetUrl('images/aeroform-champagne-1200.webp'),
   },
   {
     id: 'twotone',
@@ -48,7 +49,7 @@ const MATERIALS: MaterialConfig[] = [
     roughness: 0.3,
     basePrice: 7200,
     slug: 'aeroform-40-champagne',
-    image: '/assets/images/aeroform-champagne-1200.webp',
+    image: assetUrl('images/aeroform-champagne-1200.webp'),
   },
   {
     id: 'steel',
@@ -61,7 +62,7 @@ const MATERIALS: MaterialConfig[] = [
     roughness: 0.32,
     basePrice: 6450,
     slug: 'aeroform-40-graphite',
-    image: '/assets/images/aeroform-graphite-1200.webp',
+    image: assetUrl('images/aeroform-graphite-1200.webp'),
   },
   {
     id: 'blue',
@@ -74,7 +75,7 @@ const MATERIALS: MaterialConfig[] = [
     roughness: 0.44,
     basePrice: 6850,
     slug: 'aeroform-38-nocturne',
-    image: '/assets/images/aeroform-nocturne-1200.webp',
+    image: assetUrl('images/aeroform-nocturne-1200.webp'),
   },
   {
     id: 'oxblood',
@@ -87,7 +88,7 @@ const MATERIALS: MaterialConfig[] = [
     roughness: 0.36,
     basePrice: 6630,
     slug: 'aeroform-40-oxblood',
-    image: '/assets/images/aeroform-oxblood-1200.webp',
+    image: assetUrl('images/aeroform-oxblood-1200.webp'),
   },
 ]
 

@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Placeholder host: replace https://maisonverane.example with the live domain. -->
+<!-- GitHub Pages project site. Update the host if the repository is renamed. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://maisonverane.example/</loc><priority>1.0</priority></url>
-  <url><loc>https://maisonverane.example/collections/aeroform</loc><priority>0.9</priority></url>
-  <url><loc>https://maisonverane.example/watches</loc><priority>0.9</priority></url>
-  <url><loc>https://maisonverane.example/watches/aeroform-40-graphite</loc><priority>0.8</priority></url>
-  <url><loc>https://maisonverane.example/watches/aeroform-40-champagne</loc><priority>0.8</priority></url>
-  <url><loc>https://maisonverane.example/watches/aeroform-38-nocturne</loc><priority>0.8</priority></url>
-  <url><loc>https://maisonverane.example/watches/aeroform-gt-chronograph</loc><priority>0.8</priority></url>
-  <url><loc>https://maisonverane.example/watches/aeroform-skeleton-edition</loc><priority>0.8</priority></url>
-  <url><loc>https://maisonverane.example/watches/aeroform-40-oxblood</loc><priority>0.8</priority></url>
-  <url><loc>https://maisonverane.example/craftsmanship</loc><priority>0.7</priority></url>
-  <url><loc>https://maisonverane.example/watchmaking</loc><priority>0.7</priority></url>
-  <url><loc>https://maisonverane.example/services</loc><priority>0.7</priority></url>
-  <url><loc>https://maisonverane.example/services/personalisation</loc><priority>0.6</priority></url>
-  <url><loc>https://maisonverane.example/services/care-repair</loc><priority>0.6</priority></url>
-  <url><loc>https://maisonverane.example/appointments</loc><priority>0.6</priority></url>
-  <url><loc>https://maisonverane.example/boutiques</loc><priority>0.6</priority></url>
-  <url><loc>https://maisonverane.example/about</loc><priority>0.6</priority></url>
-  <url><loc>https://maisonverane.example/client-care</loc><priority>0.5</priority></url>
-  <url><loc>https://maisonverane.example/faq</loc><priority>0.5</priority></url>
-  <url><loc>https://maisonverane.example/contact</loc><priority>0.5</priority></url>
-  <url><loc>https://maisonverane.example/shipping-returns</loc><priority>0.5</priority></url>
-  <url><loc>https://maisonverane.example/legal/privacy</loc><priority>0.3</priority></url>
-  <url><loc>https://maisonverane.example/legal/terms</loc><priority>0.3</priority></url>
-  <url><loc>https://maisonverane.example/legal/cookies</loc><priority>0.3</priority></url>
-  <url><loc>https://maisonverane.example/legal/accessibility</loc><priority>0.3</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/</loc><priority>1.0</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/collections/aeroform</loc><priority>0.9</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/watches</loc><priority>0.9</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/watches/aeroform-40-graphite</loc><priority>0.8</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/watches/aeroform-40-champagne</loc><priority>0.8</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/watches/aeroform-38-nocturne</loc><priority>0.8</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/watches/aeroform-gt-chronograph</loc><priority>0.8</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/watches/aeroform-skeleton-edition</loc><priority>0.8</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/watches/aeroform-40-oxblood</loc><priority>0.8</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/craftsmanship</loc><priority>0.7</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/watchmaking</loc><priority>0.7</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/services</loc><priority>0.7</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/services/personalisation</loc><priority>0.6</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/services/care-repair</loc><priority>0.6</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/appointments</loc><priority>0.6</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/boutiques</loc><priority>0.6</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/about</loc><priority>0.6</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/client-care</loc><priority>0.5</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/faq</loc><priority>0.5</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/contact</loc><priority>0.5</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/shipping-returns</loc><priority>0.5</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/legal/privacy</loc><priority>0.3</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/legal/terms</loc><priority>0.3</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/legal/cookies</loc><priority>0.3</priority></url>
+  <url><loc>https://akjoc.github.io/MAISON-V-RANE/legal/accessibility</loc><priority>0.3</priority></url>
 </urlset>
