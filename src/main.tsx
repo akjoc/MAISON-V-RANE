@@ -11,9 +11,16 @@ import { syncMotion } from './lib/motionPrefs'
 
 syncMotion()
 
+/**
+ * GitHub Pages serves the site from a subpath, so the router has to know it.
+ * `BASE_URL` is '/' in development and '/MAISON-V-RANE/' in the Pages build;
+ * react-router wants the basename without a trailing slash (or none at all).
+ */
+const basename = import.meta.env.BASE_URL.replace(/\/$/, '') || undefined
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <StoreProvider>
         <App />
       </StoreProvider>

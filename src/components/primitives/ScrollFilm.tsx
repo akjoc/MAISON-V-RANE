@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { usePinnedProgress } from '../../lib/scrollMotion'
-import { imageSrc, imageSrcSet } from '../../lib/assets'
+import { assetUrl, imageSrc, imageSrcSet } from '../../lib/assets'
 import { useReducedMotion } from '../../hooks/useMediaQuery'
 import { Icon } from './Icon'
 
@@ -36,7 +36,7 @@ export function ScrollFilm({
   chapters,
   posterKey,
   posterAlt,
-  src = '/assets/video/aeroform-loop.mp4',
+  src = assetUrl('assets/video/aeroform-loop.mp4'),
 }: ScrollFilmProps) {
   const sectionRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)

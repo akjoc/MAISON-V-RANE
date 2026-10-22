@@ -5,8 +5,12 @@
  * components actually emit (including srcset candidates), then checks that each
  * one maps to a file in /public and is served with a 200 from the dev server.
  *
- *   node scripts/asset-audit.mjs            # file check only
- *   BASE=http://127.0.0.1:5173 node scripts/asset-audit.mjs   # + HTTP check
+ *   node scripts/asset-audit.mjs                     # file check only
+ *   BASE=http://127.0.0.1:5173 node scripts/asset-audit.mjs  # + HTTP check
+ *
+ * URLs are checked in their development form (root-relative). The GitHub Pages
+ * subpath is covered separately by scripts/verify-pages.mjs, which serves the
+ * production build under /<repo>/ and exercises every URL it emits.
  */
 import { createServer } from 'vite'
 import React from 'react'

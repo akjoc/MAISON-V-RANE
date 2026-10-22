@@ -10,12 +10,27 @@
     <meta property="og:title" content="MAISON VÉRANE — Aéroform" />
     <meta property="og:description" content="A fictional luxury watchmaking house. Mechanical instruments shaped by movement, air and light." />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="/assets/images/hero-wide-1600.webp" />
+    <!-- %BASE_URL% is replaced by Vite at build time; handles the GitHub Pages subpath. -->
+    <meta property="og:image" content="%BASE_URL%assets/images/hero-wide-1600.webp" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="canonical" href="https://maisonverane.example/" />
+    <!-- Canonical is written at runtime by useSeo from the current origin. -->
     <link rel="preload" as="font" type="font/woff2" href="/fonts/cormorant-garamond-latin-300-normal.woff2" crossorigin />
   </head>
   <body>
+    <script>
+      // Restores a deep link that GitHub Pages answered with 404.html.
+      // The full path (including the project subpath) is stored by that page.
+      (function () {
+        try {
+          var saved = sessionStorage.getItem('mv:gh-redirect')
+          if (!saved) return
+          sessionStorage.removeItem('mv:gh-redirect')
+          history.replaceState(null, '', saved)
+        } catch (e) {
+          /* storage blocked — the app simply opens at the root */
+        }
+      })()
+    </script>
     <div id="root"></div>
     <noscript>This experience uses JavaScript. Please enable it to explore MAISON VÉRANE.</noscript>
     <script type="module" src="/src/main.tsx"></script>

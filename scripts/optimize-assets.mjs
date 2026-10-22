@@ -149,6 +149,8 @@ async function main() {
 
   await writeFile(
     path.join(ROOT, 'public/assets/ASSET-MANIFEST.json'),
+    // Runtime copy: lets src/lib/assets.ts clamp srcset widths to real files.
+    path.join(ROOT, 'src/data/asset-manifest.json'),
     JSON.stringify({ generated: new Date().toISOString(), images: manifest, missing }, null, 2),
   )
 

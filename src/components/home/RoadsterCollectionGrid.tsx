@@ -4,6 +4,7 @@ import { useStore } from '../../context/StoreContext'
 import { useUI } from '../../context/UIContext'
 import { productById } from '../../data/products'
 import '../../styles/cartier-sections.css'
+import { assetUrl } from '../../lib/assets'
 
 interface WatchItem {
   id: string
@@ -22,7 +23,7 @@ const goldModels: WatchItem[] = [
     name: 'Aéroform 40 Gold Édition',
     spec: 'Large model, automatic movement, 40 mm, yellow gold',
     price: '£8,450',
-    image: '/assets/images/aeroform-champagne-1200.webp',
+    image: assetUrl('images/aeroform-champagne-1200.webp'),
     productId: 'af-40-ch',
     strapId: 'bracelet-steel',
     slug: 'aeroform-40-champagne',
@@ -32,7 +33,7 @@ const goldModels: WatchItem[] = [
     name: 'Aéroform 38 Gold Édition',
     spec: 'Medium model, automatic movement, 38 mm, yellow gold',
     price: '£7,850',
-    image: '/assets/images/aeroform-champagne-1200.webp',
+    image: assetUrl('images/aeroform-champagne-1200.webp'),
     productId: 'af-40-ch',
     strapId: 'bracelet-steel',
     slug: 'aeroform-40-champagne',
@@ -45,7 +46,7 @@ const twoToneModels: WatchItem[] = [
     name: 'Aéroform 40 Two-Tone',
     spec: 'Large model, steel and yellow gold, opaline dial',
     price: '£7,200',
-    image: '/assets/images/aeroform-champagne-1200.webp',
+    image: assetUrl('images/aeroform-champagne-1200.webp'),
     productId: 'af-40-ch',
     strapId: 'bracelet-steel',
     slug: 'aeroform-40-champagne',
@@ -55,7 +56,7 @@ const twoToneModels: WatchItem[] = [
     name: 'Aéroform 38 Two-Tone',
     spec: 'Medium model, steel and yellow gold, opaline dial',
     price: '£6,700',
-    image: '/assets/images/aeroform-champagne-1200.webp',
+    image: assetUrl('images/aeroform-champagne-1200.webp'),
     productId: 'af-40-ch',
     strapId: 'bracelet-steel',
     slug: 'aeroform-40-champagne',
@@ -68,7 +69,7 @@ const steelModels: WatchItem[] = [
     name: 'Aéroform 40 Graphite',
     spec: 'Large model, steel, horizontally brushed dial',
     price: '£6,450',
-    image: '/assets/images/aeroform-graphite-1200.webp',
+    image: assetUrl('images/aeroform-graphite-1200.webp'),
     productId: 'af-40-gr',
     strapId: 'bracelet-steel',
     slug: 'aeroform-40-graphite',
@@ -78,7 +79,7 @@ const steelModels: WatchItem[] = [
     name: 'Aéroform 38 Nocturne',
     spec: 'Medium model, steel, ink blue lacquered dial',
     price: '£5,850',
-    image: '/assets/images/aeroform-nocturne-1200.webp',
+    image: assetUrl('images/aeroform-nocturne-1200.webp'),
     productId: 'af-38-nc',
     strapId: 'strap-ink-rubber',
     slug: 'aeroform-38-nocturne',
@@ -88,7 +89,7 @@ const steelModels: WatchItem[] = [
     name: 'Aéroform 40 Oxblood',
     spec: 'Large model, steel, deep oxblood sunburst dial',
     price: '£6,630',
-    image: '/assets/images/aeroform-oxblood-1200.webp',
+    image: assetUrl('images/aeroform-oxblood-1200.webp'),
     productId: 'af-40-ox',
     strapId: 'strap-oxblood-calf',
     slug: 'aeroform-40-oxblood',

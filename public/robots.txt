@@ -1,5 +1,5 @@
 # MAISON VÉRANE — fictional prototype
-# Replace the host below with the production domain before launch.
+# Host: GitHub Pages project site. Update both files if the repo is renamed.
 User-agent: *
 Allow: /
 Disallow: /checkout
@@ -8,4 +8,4 @@ Disallow: /cart
 Disallow: /wishlist
 Disallow: /search
 
-Sitemap: https://maisonverane.example/sitemap.xml
+Sitemap: https://akjoc.github.io/MAISON-V-RANE/sitemap.xml

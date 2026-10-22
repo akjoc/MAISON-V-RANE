@@ -48,7 +48,42 @@ npm run optimize-assets
 ```
 
 Reads source renders from `raw/` and writes responsive AVIF/WebP plus derived gallery crops to
-`public/assets/images`. See **ASSETS.md** for the full inventory and provenance.
+`public/assets/images`, and a width manifest to `src/data/asset-manifest.json` (see below).
+See **ASSETS.md** for the full inventory and provenance.
+
+---
+
+## Deploying to GitHub Pages
+
+The site is a client-routed single-page app served from a project subpath
+(`https://<user>.github.io/MAISON-V-RANE/`), which needs three things the default build does not do.
+All three are implemented here:
+
+1. **Base path** — `vite.config.ts` reads `GITHUB_PAGES` and builds with `base: '/MAISON-V-RANE/'`
+   (override with `PAGES_BASE` if the repository is renamed). Local dev and preview keep serving
+   from `/`.
+2. **Base-aware URLs** — Vite rewrites what it can see (the HTML shell, CSS `url()`s). Paths built
+   in JavaScript cannot be rewritten, so `assetUrl()` in `src/lib/assets.ts` prefixes
+   `import.meta.env.BASE_URL`, and every image, film and poster goes through it. `BrowserRouter`
+   gets the same value as its `basename`.
+3. **Deep links** — Pages has no rewrites, so `scripts/make-pages-404.mjs` writes a `404.html` that
+   stores the requested path and hands it back to the app, which restores it with `replaceState`
+   before React mounts. `.nojekyll` is written at the same time.
+
+`.github/workflows/deploy.yml` builds and publishes on every push to `main`
+(`actions/configure-pages` → `upload-pages-artifact` → `deploy-pages`). The repository's
+**Settings → Pages → Source** must be set to **GitHub Actions**.
+
+```bash
+npm run build:pages       # GITHUB_PAGES=true build + 404.html + .nojekyll
+npm run verify:pages      # serve dist/ under the subpath and check every reference
+npm run verify:pages:render  # run the built bundle at a Pages URL and check rendered media
+```
+
+The same build runs locally at `http://localhost:4173/MAISON-V-RANE/` after `npm run preview:pages`.
+
+> Note: `localStorage` is per-origin, so the bag, wishlist and motion preference do not follow a
+> visitor between the sandbox preview and the deployed URL.
 
 ---
 
@@ -214,6 +249,10 @@ scripts/          optimize-assets.mjs
   fakes layout rectangles and asserts that a scroll event moves the parallax transform and advances
   the study to chapter 03. With `REDUCED=1` it asserts the reduced-motion stylesheet is injected,
   the study falls back to its static grid and the film renders no video.
+- `npm run verify:pages` — serves the Pages build under `/MAISON-V-RANE/` (with the 404 fallback)
+  and checks the shell, every baked image/video/font URL, the deep-link handover and `.nojekyll`.
+- `npm run verify:pages:render` — runs the production bundle in jsdom at a Pages URL and verifies
+  that all 102 rendered media URLs carry the subpath and return 200.
 - `npm run check:assets` — server-renders 23 routes, harvests all 280 image URLs the components
   actually emit (every `srcset` candidate and poster), and verifies each maps to a file and returns
   200. One real defect was found and fixed this way: the lifestyle frame is portrait while the

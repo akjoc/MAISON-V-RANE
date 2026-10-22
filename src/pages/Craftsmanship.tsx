@@ -7,6 +7,7 @@ import { RevealText, Line } from '../components/primitives/RevealText'
 import { craftsmanshipChapters } from '../data/editorial'
 import { ScrollFilm } from '../components/primitives/ScrollFilm'
 import { usePinnedProgress } from '../lib/scrollMotion'
+import { assetUrl } from '../lib/assets'
 import { useReducedMotion } from '../hooks/useMediaQuery'
 
 const sequence = [
@@ -253,7 +254,7 @@ export default function Craftsmanship() {
       <ScrollFilm
         posterKey="craft-atelier"
         posterAlt="A watchmaker at the bench under a warm lamp"
-        src="/assets/video/atelier-loop.mp4"
+        src={assetUrl('assets/video/atelier-loop.mp4')}
         eyebrow="A short film"
         heading="The bench, at working pace."
         chapters={[

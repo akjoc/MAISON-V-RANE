@@ -1,5 +1,6 @@
 import { RevealSection } from '../primitives/RevealSection'
 import '../../styles/cartier-sections.css'
+import { assetUrl } from '../../lib/assets'
 
 interface CodeItem {
   num: string
@@ -15,7 +16,7 @@ const columnLeft: CodeItem[] = [
     num: '01 · Silhouette',
     title: 'The Aerodynamic Contour',
     desc: 'Machined from a single block of stainless steel 316L, brushed in one continuous pass from lug to lug so light flows in an unbroken stream.',
-    image: '/assets/images/hero-vertical-1024.webp',
+    image: assetUrl('images/hero-vertical-1024.webp'),
     alt: 'Full view of the Aéroform watch silhouette',
     tall: true,
   },
@@ -23,7 +24,7 @@ const columnLeft: CodeItem[] = [
     num: '03 · Ergonomics',
     title: 'Anatomic Wrist Profile',
     desc: 'The cushion geometry curves at four calculated points, allowing the watch to drape flush against the carpal curve without bulk.',
-    image: '/assets/images/aeroform-graphite-case-1200.webp',
+    image: assetUrl('images/aeroform-graphite-case-1200.webp'),
     alt: 'Profile view showing ergonomic curved case',
   },
 ]
@@ -33,14 +34,14 @@ const columnRight: CodeItem[] = [
     num: '02 · Crown & Chamfer',
     title: 'The Fluted Crown & Bezel',
     desc: 'A knurled winding crown tipped with a hand-polished oxblood cabochon, framed by a high-polish 45° chamfered minute bezel.',
-    image: '/assets/images/macro-case-1200.webp',
+    image: assetUrl('images/macro-case-1200.webp'),
     alt: 'Macro view of the fluted crown and polished chamfer',
   },
   {
     num: '04 · Quick-Release',
     title: 'Interchangeable Bracelet System',
     desc: 'Integrated H-link links with concealed push-pieces, enabling a swift transition between hand-stitched leather and solid steel.',
-    image: '/assets/images/macro-bracelet-1200.webp',
+    image: assetUrl('images/macro-bracelet-1200.webp'),
     alt: 'Macro view of the integrated bracelet connection and caseback',
     tall: true,
   },

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Icon } from './Icon'
 import { useReducedMotion } from '../../hooks/useMediaQuery'
-import { imageSrc, imageSrcSet } from '../../lib/assets'
+import { assetUrl, imageSrc, imageSrcSet } from '../../lib/assets'
 
 interface VideoHeroProps {
   posterKey: string
@@ -22,7 +22,7 @@ interface VideoHeroProps {
 export function VideoHero({
   posterKey,
   posterAlt,
-  src = '/assets/video/aeroform-loop.mp4',
+  src = assetUrl('assets/video/aeroform-loop.mp4'),
   children,
   className = '',
   label = 'Aéroform, in motion',

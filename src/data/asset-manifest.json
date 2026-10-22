@@ -1,0 +1,241 @@
+{
+  "hero-wide": [
+    640,
+    960,
+    1280,
+    1600,
+    1920
+  ],
+  "hero-vertical": [
+    480,
+    768,
+    1024
+  ],
+  "hero-flagship": [
+    480,
+    768,
+    1024
+  ],
+  "editorial-collection": [
+    640,
+    960,
+    1280,
+    1600,
+    1920
+  ],
+  "craft-atelier": [
+    640,
+    960,
+    1280,
+    1600,
+    1920
+  ],
+  "macro-dial": [
+    480,
+    800,
+    1200
+  ],
+  "macro-bracelet": [
+    480,
+    800,
+    1200
+  ],
+  "macro-case": [
+    480,
+    800,
+    1200
+  ],
+  "material-steel": [
+    480,
+    800,
+    1200
+  ],
+  "service-engraving": [
+    480,
+    800,
+    1200
+  ],
+  "movement-macro": [
+    480,
+    800,
+    1200
+  ],
+  "campaign-staircase": [
+    640,
+    960,
+    1280,
+    1600,
+    1920
+  ],
+  "boutique-interior": [
+    640,
+    960,
+    1280,
+    1600,
+    1920
+  ],
+  "care-service": [
+    640,
+    960,
+    1280,
+    1600,
+    1920
+  ],
+  "aeroform-graphite": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-champagne": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-nocturne": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-gt": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-skeleton": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-oxblood": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-graphite-dial": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-graphite-case": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-graphite-detail": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-graphite-bracelet": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-champagne-dial": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-champagne-case": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-champagne-detail": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-champagne-bracelet": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-nocturne-dial": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-nocturne-case": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-nocturne-detail": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-nocturne-bracelet": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-gt-dial": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-gt-case": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-gt-detail": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-gt-bracelet": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-skeleton-dial": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-skeleton-case": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-skeleton-detail": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-skeleton-bracelet": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-oxblood-dial": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-oxblood-case": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-oxblood-detail": [
+    480,
+    800,
+    1200
+  ],
+  "aeroform-oxblood-bracelet": [
+    480,
+    800,
+    1200
+  ],
+  "hero-vertical-wide": [
+    640,
+    960,
+    1280,
+    1600,
+    1920
+  ]
+}
